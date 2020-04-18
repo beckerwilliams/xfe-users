@@ -9,7 +9,7 @@ Illustrates Access to XFE-API using api-keys and 3 Methods
     - /ipr      Get Full IPR Report for IP Indicator
     - /url      Get Full URL Report for URL Indicator (hosts or urls)
 
-Requires the python Requests (2.23.0 or greater) package
+Requirement: Requests (>=2.23.0) Package
 
 Author:
 Ron Williams, Chief Architect, IBM X-Force Exchange
