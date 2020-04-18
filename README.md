@@ -15,7 +15,7 @@ Getting Started
     a. From your chosen Python Environment, install Requests 2.23.0 (or higher)
         pip install requests
 
-Configuraton (Install API Keys) i.e. api_keys = <api-key>:<api-pw>
+Configuraton (Install API Keys) i.e. api_keys = '<api-key>:<api-pw>'
 ------------------------------------------------------------------
     1. Open xfe-users/scripts/xfe-examples.py
     2. Replace <API-KEY>:<API-PW> w/ your API-KEY and API-PW, with separting colong ':' character between
