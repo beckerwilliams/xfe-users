@@ -38,6 +38,7 @@ def dns_history_for_ip(ip_address, creds):
     domain_data = get('/'.join((xfe_url, api, ip_address)),
                       headers=_xfe_headers,
                       auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json Method
+
     # Aggregate individual passive dns records for ip
     notes = []
     for rec in domain_data['Passive']['records']:
@@ -59,6 +60,7 @@ def url_record(url_string, creds):
     resp = get('/'.join((xfe_url, api, url_string)),
                headers=_xfe_headers,
                auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json method
+
     if 'result' in resp:
         return resp['result']
     else:
