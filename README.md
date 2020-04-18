@@ -1,9 +1,9 @@
 xfe-users.py
 ------------
 Working Illustration of Simple X-Force API Access and Use
-=====================================================================
+=========================================================
 Illustrates Access to XFE-API using api-keys and 3 Methods
---------------------------------------------
+----------------------------------------------------------
 
     - /resolve  Get Passive DNS History for Indicator
     - /ipr      Get Full IPR Report for IP Indicator
