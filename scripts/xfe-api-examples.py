@@ -21,7 +21,7 @@ __date__ = '2020-04-18T18:14:01+0000'
 __author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
 __author_email__ = 'ron[.]williams@us[.]ibm[.]com'
 __copyright__ = '2020 (C) Ron Williams, IBM. No Warranty Expressed or Implied. Use is at your own risk.'
-__git_rev__ = 'a860886acfee16fece7abd5081329fe2d5f68145'
+__git_rev__ = 'c10edb0f05aacc579c72c4592dd5b2e8d151f044'
 
 # Recommended Default HTTP Header Variables (to be used with Requests.get()
 xfe_url = 'https://api.xforce.ibmcloud.com'
@@ -90,7 +90,7 @@ if __name__ == '__main__':
         should look something like: '<api-key>:<api-pw>'
     """
     api_keys = '<api-key>:<api-pw>'
-    # from os import environ  # Alternatively, this is a useful technique for local testing to simplify authentication
+    # from os import environ  # Alternatively, this is a useful technique for local testing
     # api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
 
     # Get PDNS Records for IP from /resolve
