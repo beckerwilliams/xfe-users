@@ -90,16 +90,16 @@ if __name__ == '__main__':
         should look something like: '<api-key>:<api-pw>'
     """
     api_keys = '<api-key>:<api-pw>'
-    # from os import environ  #      This is a useful technique for local testing to simplify authentication
-    # api_keys = environ['xauth']  # `export xauth='<api-key:api-pw>'`, or `setenv xauth $api-key:$api-pw'`
+    # from os import environ  # Alternatively, this is a useful technique for local testing to simplify authentication
+    # api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
 
     # Get PDNS Records for IP from /resolve
     ip = '1.2.3.4'
     dns_records = dns_history_for_ip(ip, api_keys)
+
     # Example: Aggregate PDNS Records and print """
     dns_text = ''
     print("DNS Records for IP: %s" % ip)
-
     # a simple python Format for DNS Records (dict)
     pdns_fmt = 'domain: {value}, type: {type}, recordType: {recordType}, last: {last}, first: {first}\n'
 
