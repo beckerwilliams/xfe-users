@@ -13,6 +13,14 @@ X-Force Exchange API Documentation
 
 [/url:      Get Full URL Report for URL Indicator (hosts or urls)](https://github.com/beckerwilliams/xfe-users)
 
+
+author
+------
+
+Ron Williams, Chief Architect, IBM X-Force Exchange,
+ron[.]williams@us[.]ibm[.]com, 
+[@linkedin](https://www.linkedin.com/in/rbwilliams)
+
 Getting Started
 ===============
     Requirement
@@ -46,12 +54,6 @@ With Requests, this technique is preferable to loading the raw data content and 
 Requirements:
 
     Requests (>=2.23.0) Package
-
-Author:
-
-    Ron Williams, Chief Architect, IBM X-Force Exchange
-    ron[.]williams@us[.]ibm[.]com
-    [https://www.linkedin.com/in/rbwilliams]
     
 Terms and Conditions
 --------------------
