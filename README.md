@@ -21,16 +21,15 @@ Author:
 Terms and Conditions
 --------------------
     Your use of this file constitutes your agreement with the followings Terms and Condidtions.
-    Specifically that:
+    Specifically, you agree that:
     - This file is for educational purposes only. 
     - You will use this file at your own risk.
     - This file provides No Warranty, Expressed or Implied.
-    - You may copy, delete, of modify, disseminate, include in your own product, any element of this file
-    - i.e. you may use any portion of this file any lawful way you choose.
+    - You may copy, delete, modify, disseminate, and  include this file or any element of this file in any work product you desire.
     - You agree to fully indemnify the Copyright holder from any claims, material or otherwise
-    with respect to the your use of this file and any of it's contents.
-    - use of this file does not constitute autorized entitlement to the X-Force API
-    - Entitlement to use X-Force Exchange API must be otained individually by the user.
+    with respect to the your use of this file and/or any of it's contents.
+    - YOur use of this file Does Not provide or constitute authorized entitlement to the X-Force Exchange API
+    - Entitlement to use X-Force Exchange API must be otained separately by the user.
     
 Copyright (c) 2020, Ron Williams. All Rights Reserved.
 
