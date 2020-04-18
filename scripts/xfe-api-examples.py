@@ -6,9 +6,6 @@ This Illustrates Access to XFE-API for 3 Methods
 
     (requires the python Requests package)
 
-    __author__:         Ron Williams, Chief Architect, IBM X-Force Exchange
-    __author_email__:   ron[.]williams@us[.]ibm[.]com
-
     Disclaimer: This file is for educational purposes only. Use at your own risk. No Warranty Expressed or Implied.
     Entitlement for access to IBM X-Force Exchange is the responsibility of the user, and must be obtained for
     examples to run.
