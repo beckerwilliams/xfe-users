@@ -21,7 +21,7 @@ __date__ = '2020-04-18T18:14:01+0000'
 __author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
 __author_email__ = 'ron[.]williams@us[.]ibm[.]com'
 __copyright__ = '2020 (C) Ron Williams, IBM. No Warranty Expressed or Implied. Use is at your own risk.'
-__git_rev__ = ''
+__git_rev__ = 'a860886acfee16fece7abd5081329fe2d5f68145'
 
 # Recommended Default HTTP Header Variables (to be used with Requests.get()
 xfe_url = 'https://api.xforce.ibmcloud.com'
