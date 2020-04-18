@@ -5,9 +5,13 @@ Working Illustration of Simple X-Force API Access and Use
 Illustrates Access to XFE-API using api-keys and 3 Methods
 ----------------------------------------------------------
 
-    /resolve  Get Passive DNS History for Indicator
-    /ipr      Get Full IPR Report for IP Indicator
-    /url      Get Full URL Report for URL Indicator (hosts or urls)
+X-Force Exchange API Documentation
+
+[/resolve:  Get Passive DNS History for Indicator](https://api.xforce.ibmcloud.com/doc/#!/DNS/get_resolve_input)
+
+[/ipr:      Get Full IPR Report for IP Indicator](https://api.xforce.ibmcloud.com/doc/#!/IP_Reputation/get_ipr_ip)
+
+[/url:      Get Full URL Report for URL Indicator (hosts or urls)](https://github.com/beckerwilliams/xfe-users)
 
 Getting Started
 ===============
