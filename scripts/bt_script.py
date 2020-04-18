@@ -18,64 +18,68 @@ from json import dumps
 from requests import get
 __version__ = '1.0.1'
 __date__ = '2020-04-18T18:14:01+0000'
+__author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
+__author_email__ = 'ron[.]williams@us[.]ibm[.]com'
+__copyright__ = '2020 (C) Ron Williams, IBM. No Warranty Expressed or Implied. Use is at your own risk.'
 
 # Recommended Default HTTP Header Variables (to be used with Requests.get()
 xfe_url = 'https://api.xforce.ibmcloud.com'
 _xfe_headers = {'accept': 'application/json', 'content-type': 'application/json'}
 
 
-def dns_history_for_ip(ip, api_keys):
+def dns_history_for_ip(ip_address, creds):
     """
     XFE-API: /resolve
     Get Passive DNS History for IP
 
-    :param ip:
+    :param ip_address:
+    :param creds: string: '<api-key>.<api-pw>'
     :return: list
     """
-    # API: /resolv
     api = 'resolve'
-    domain_data = get('/'.join((xfe_url, api, ip)),
+    domain_data = get('/'.join((xfe_url, api, ip_address)),
                       headers=_xfe_headers,
-                      auth=tuple(api_keys.split(':'))).json()  # <- 'Requests' Has a .json Method
+                      auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json Method
     # Aggregate individual passive dns records for ip
     notes = []
-    for record in domain_data['Passive']['records']:
-        if not record:
+    for rec in domain_data['Passive']['records']:
+        if not rec:
             break
-        notes.append(record)
+        notes.append(rec)
     return notes
 
 
-def url_record(url, api_keys):
+def url_record(url_string, creds):
     """
     XFE-API: /url
-    :param url:
+
+    :param url_string: string: '[http(s)://]host:port/path?query#fragment'
+    :param creds: string: '<api-key>.<api-pw>'
     :return: dict
     """
-    # API: /ipr
     api = 'url'
-    resp = get('/'.join((xfe_url, api, url)),
+    resp = get('/'.join((xfe_url, api, url_string)),
                headers=_xfe_headers,
-               auth=tuple(api_keys.split(':'))).json()
+               auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json method
     if 'result' in resp:
         return resp['result']
     else:
         return {'error': 'Not Found'}
 
 
-def ip_record(ip, api_keys):
+def ip_record(ip_address, creds):
     """
     XFE_API: /ipr
     Get FULL IP Report for IP (w/ Current PDNS)
 
-    :param ip:
-    :return: dict
+    :param ip_address:
+    :param creds: api_keys: '<api-key>:<api-pw>'
+    :return:  dict: IPR Report (JSON)
     """
-    # API: /ipr
     api = 'ipr'
-    return get('/'.join((xfe_url, api, ip)),
+    return get('/'.join((xfe_url, api, ip_address)),
                headers=_xfe_headers,
-               auth=tuple(api_keys.split(':'))).json()  # <- 'Requests' Has a .json
+               auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json method
 
 
 if __name__ == '__main__':
@@ -107,31 +111,30 @@ if __name__ == '__main__':
                 This is useful if the example mapping is a dict (json object)"""
 
     """ Instead of JUST Passive DNS for IP, Get Complete IPR w/ LATEST PDNS for IP """
-    rec = ip_record(ip, api_keys)
+    ip_report = ip_record(ip, api_keys)
     """ You Can Extract the Elements You need Here, 
         Or Cache These results (Full IPR w/ categorizaton history, or URLs (no history) Records)
         You may augment IPR records you cache w/ Passive DNS by obtaining /resolve for the IP
         The full record contains the CURRENT PDNS HISTORY for IP from rec
     """
-    if 'error' not in rec:
-        print(dumps(rec, indent=4))
+    if 'error' not in ip_report:
+        print(dumps(ip_report, indent=4))
     else:
         print("IP: <%s>: Not Found" % ip)
 
     # And an example URL
     url = 'http://netflix-covid-19.com'
-    rec = url_record(url, api_keys)
+    url_report = url_record(url, api_keys)
     print("Illustrating Existing Indicator")
-    if 'error' not in rec:
-        print(dumps(rec, indent=4))
+    if 'error' not in url_report:
+        print(dumps(url_report, indent=4))
     else:
-        print("URL: <%s>: %s" % (url, rec['error']))
+        print("URL: <%s>: %s" % (url, url_report['error']))
 
     """ And an URL which Won't Be Found  """
     url = 'https://funky-url-that-wont-be-found.blat'
-    rec = url_record(url, api_keys)
-    print("Illustrating Not Found Response")
-    if 'error' not in rec:
-        print(dumps(rec, indent=4))
+    url_report = url_record(url, api_keys)
+    if 'error' not in url_report:
+        print(dumps(url_report, indent=4))
     else:
-        print("Illustrating Indicator Not Found on XF:\nURL: <%s>: %s" % (url, rec['error']))
+        print("Illustrating Indicator Not Found on XF:\nURL: <%s>: %s" % (url, url_report['error']))
