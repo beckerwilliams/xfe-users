@@ -14,12 +14,12 @@ This Illustrates Access to XFE-API for 3 Methods
 from json import dumps
 from requests import get
 
-__version__ = '1.0.1'
-__date__ = '2020-04-18T18:14:01+0000'
+__version__ = '1.0.3'
+__date__ = '2020-04-19T17:20:48+0000'
 __author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
 __author_email__ = 'ron[.]williams@us[.]ibm[.]com'
 __copyright__ = '2020 (C) Ron Williams, IBM. No Warranty Expressed or Implied. Use is at your own risk.'
-__git_rev__ = 'c10edb0f05aacc579c72c4592dd5b2e8d151f044'
+__git_rev__ = '30c2db7e6253d510d09f4c152673b7c8e916a12c'
 
 # Recommended Default HTTP Header Variables (to be used with Requests.get()
 xfe_url = 'https://api.xforce.ibmcloud.com'
@@ -89,9 +89,9 @@ if __name__ == '__main__':
         with ':' between user part (or api-key) and password part (or api-pw)
         should look something like: '<api-key>:<api-pw>'
     """
-    # api_keys = '<api-key>:<api-pw>'
-    from os import environ  # Alternatively, this is a useful technique for local testing
-    api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
+    api_keys = '<api-key>:<api-pw>'
+    # from os import environ  # Alternatively, this is a useful technique for local testing
+    # api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
 
     # Get PDNS Records for IP from /resolve
     ip = '1.2.3.4'
