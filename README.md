@@ -68,7 +68,6 @@ Terms and Conditions
     - YOur use of this file Does Not provide or constitute authorized entitlement to the X-Force Exchange API
     - Entitlement to use X-Force Exchange API must be otained separately by the user.
 
-repo: https://github.com/beckerwilliams/xfe-api-examples.py
-    
+repo: https://github.com/beckerwilliams/xfe-users
 Copyright (c) 2020, Ron Williams. All Rights Reserved.
 

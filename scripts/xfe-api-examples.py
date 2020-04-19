@@ -13,6 +13,7 @@ This Illustrates Access to XFE-API for 3 Methods
 """
 from json import dumps
 from requests import get
+
 __version__ = '1.0.1'
 __date__ = '2020-04-18T18:14:01+0000'
 __author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
@@ -88,9 +89,9 @@ if __name__ == '__main__':
         with ':' between user part (or api-key) and password part (or api-pw)
         should look something like: '<api-key>:<api-pw>'
     """
-    api_keys = '<api-key>:<api-pw>'
-    # from os import environ  # Alternatively, this is a useful technique for local testing
-    # api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
+    # api_keys = '<api-key>:<api-pw>'
+    from os import environ  # Alternatively, this is a useful technique for local testing
+    api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw`
 
     # Get PDNS Records for IP from /resolve
     ip = '1.2.3.4'
