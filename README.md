@@ -67,11 +67,11 @@ Getting Started
         
 After editing to enable, the Alternative eliminates the need to edit the script to set, update, or delete chosen API-KEYs.
 
-###Run Script
+### Run Script
     From ./xfe-users type:
         python scripts/xfe-api-examples.py
             
-#### Using Requests Module
+#### Tips on Using the `Request`s Module
 
 - The `Request`'s Response object contains a method, `(self.)json()`, which will return the data as a JSON Object
 (Python `dict`). 
@@ -82,7 +82,7 @@ After editing to enable, the Alternative eliminates the need to edit the script 
 
     #### Example
 
-    ##### When the response headers contain `{"Content-Type": "*.json" `,  Always use Request's Response method, `json()`
+    ##### When the response headers contain `{"Content-Type": "*.json" `,  Always use Request's `json()` Response method.
     
         def ip_record(ip_address, creds):
             api = 'ipr'
@@ -91,7 +91,7 @@ After editing to enable, the Alternative eliminates the need to edit the script 
                        auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json() method
                                                     ^^^^^^^
 
-    ##### The following is an alternate implementation to Request's `resp.json`, and Unnecessary if `.json()` employed.
+    ##### The following is an alternate implementation to Request's `resp.json`, and Unnecessary if `json()` employed.
     
         def ip_record(ip_address, creds):
             api = 'ipr'
