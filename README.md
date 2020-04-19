@@ -82,8 +82,8 @@ After editing to enable, the Alternative eliminates the need to edit the script 
 
     #### Example
 
-    ##### When the response headers contain `{"Content-Type": "*.json" `,  Always use Request's `json()` Response method.
-    
+    ##### When the response headers contain `{"Content-Type": "*.json"}" `,  Always use Request's `json()` Response method.
+        
         def ip_record(ip_address, creds):
             api = 'ipr'
             return get('/'.join((xfe_url, api, ip_address)),
@@ -91,7 +91,7 @@ After editing to enable, the Alternative eliminates the need to edit the script 
                        auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json() method
                                                     ^^^^^^^
 
-    ##### The following is an alternate implementation to Request's `resp.json`, and Unnecessary if `json()` employed.
+    ##### This approach is Unnecessary if `json()` employed.
     
         def ip_record(ip_address, creds):
             api = 'ipr'
@@ -114,12 +114,12 @@ Free Trials and Paid Offerings to X-Force Exchange Commercial API
 Terms and Conditions
 ====================
 
-- This file is for educational purposes only. 
+- This package and it's contents are for educational purposes only. 
 - Use at your own risk, no warranty is expressed or implied.
-- The user of this file is solely responsible for obtaining IBM Authorized Entitlement to use the X-Force Exchange API. 
-- Use of this file DOES NOT constitute authorized access to the X-Force Exchange or it's services.
-- The user of this file will indemnify and save harmless the author of this file against any and all claims 
-  against the user that result from the user's' employment of this file, it's code elements, or other 
+- The user of this package is solely responsible for obtaining IBM Authorized Entitlement to use the X-Force Exchange API. 
+- Use of this package DOES NOT constitute authorized access to the X-Force Exchange or it's services.
+- The User of this package will indemnify and save harmless the author of this package against any and all claims 
+  against the User that result from the User's' employment of this package, it's files, it's code elements, and/or other 
   information contained herein.
 
 Copyright (c) 2020, Ron Williams. All Rights Reserved.
