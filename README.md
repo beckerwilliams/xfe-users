@@ -112,7 +112,7 @@ Free Trials and Paid Offerings to X-Force Exchange Commercial API
   - [X-Force Exchange Commercial API Offerings and Trials: X-Force Exchange Commercial API (Try/Buy)](https://www.ibm.com/products/ibm-xforce-exchange/editions)
 
 Terms and Conditions
-====================
+--------------------
 
 - This package and it's contents are for educational purposes only. 
 - Use at your own risk, no warranty is expressed or implied.
@@ -122,4 +122,4 @@ Terms and Conditions
   against the User that result from the User's' employment of this package, it's files, it's code elements, and/or other 
   information contained herein.
 
-Copyright (c) 2020, Ron Williams. All Rights Reserved.
+#### Copyright (c) 2020, Ron Williams. All Rights Reserved.
