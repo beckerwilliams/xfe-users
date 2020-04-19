@@ -1,73 +1,125 @@
-xfe-api-examples.py
-------------
-Working Illustration of Simple X-Force API Access and Use
-=========================================================
-Illustrates Access to XFE-API using api-keys and 3 Methods
-----------------------------------------------------------
+[xfe-api-examples.py](https://github.com/beckerwilliams/xfe-users)
+---------------------
+X-Force API Access and Use
+===================================================
 
-X-Force Exchange API Documentation
+Example APIs
+-------------------------------------
+- [/resolve:  Get Passive DNS History for Indicator](https://api.xforce.ibmcloud.com/doc/#!/DNS/get_resolve_input)
 
-[/resolve:  Get Passive DNS History for Indicator](https://api.xforce.ibmcloud.com/doc/#!/DNS/get_resolve_input)
+- [/ipr:      Get Full IPR Report for IP Indicator](https://api.xforce.ibmcloud.com/doc/#!/IP_Reputation/get_ipr_ip)
 
-[/ipr:      Get Full IPR Report for IP Indicator](https://api.xforce.ibmcloud.com/doc/#!/IP_Reputation/get_ipr_ip)
+- [/url:      Get Full URL Report for URL Indicator (hosts or urls)](https://github.com/beckerwilliams/xfe-users)
 
-[/url:      Get Full URL Report for URL Indicator (hosts or urls)](https://github.com/beckerwilliams/xfe-users)
+packages required
 
+- Python Requests Package (>=2.23.0)
 
 author
-------
 
-Ron Williams, Chief Architect, IBM X-Force Exchange,
+- Ron Williams, Chief Architect, IBM X-Force Exchange,
 ron[.]williams@us[.]ibm[.]com, 
 [@linkedin](https://www.linkedin.com/in/rbwilliams)
 
 Getting Started
-===============
-    Requirement
-    a. From your chosen Python Environment, install Requests 2.23.0 (or higher)
-        pip install requests
+---------------
 
-Configuraton (Install API Keys) i.e. api_keys = '<api-key>:<api-pw>'
-------------------------------------------------------------------
-    1. Open xfe-users/scripts/xfe-examples.py
-    2. Replace <API-KEY>:<API-PW> w/ your API-KEY and API-PW, with separting colong ':' character between
-       api_keys = '<API-KEY>:<API-PW>'
+### Configuration (Install API Keys)
 
-Run Script
-----------
+#### Simple Method
+
+1. Open xfe-users/scripts/xfe-examples.py
+2. Replace 
+    - `<API-KEY>:<API-PW>`
+    
+    w/ your API-KEY and API-PW, 
+    
+    - `api_keys = '<API-KEY>:<API-PW>'`
+       
+#### Alternative Method
+    
+1. Set Api-Key in Environment
+
+    Bourne Shell or BASH
+    - `export xauth='<api-key>:<api-pw>'`
+    
+    C Shell
+    - `setenv xauth '{api-key}:{api-pw}'`
+   
+2. Comment out the first line below (at the beginning of __main__)
+
+    - `api_keys = '<api-key>:<api-pw>'` 
+    
+    to    
+     
+    - `#api_keys = '<api-key>:<api-pw>'`
+
+3. Uncomment the next two lines:
+    
+        #from os import environ  # Alternatively, this is a useful technique for local testing
+        #api_keys = environ['xauth']  # `export xauth=<api-key:api-pw>`, or `setenv xauth $api-key:$api-pw'
+    
+    to
+    
+        from os import environ  # Alternatively, this is a useful technique for local testing.
+        api_keys = environ['xauth']  # export xauth=<api-key:api-pw> 
+
+        
+After editing to enable, the Alternative eliminates the need to edit the script to set, update, or delete chosen API-KEYs.
+
+###Run Script
     From ./xfe-users type:
         python scripts/xfe-api-examples.py
-      
-Notes
-------
-When the Response from the Requests module is accompanied by 'Content-Type': 'application/json',
-the object returned  contains a json() method which returns the **data** portion of the response in JSON format.
-With Requests, this technique is preferable to loading the raw data content and converting with json.loads
+            
+#### Using Requests Module
 
-    Example
-    r = Request.get(...)
-    return r.json()
-    
-    Short Cut:
-    return Request.get(...).json()
-    
-Requirements:
+- The `Request`'s Response object contains a method, `(self.)json()`, which will return the data as a JSON Object
+(Python `dict`). 
 
-    Requests (>=2.23.0) Package
+- This method is valid if the Response Header's `Content-Type` field is `application/json`.
+
+- This technique is preferable to loading the raw data content and converting the raw data with `json.loads(resp.content)`
+
+    #### Example
+
+    ##### When the response headers contain `{"Content-Type": "*.json" `,  Always use Request's Response method, `json()`
     
+        def ip_record(ip_address, creds):
+            api = 'ipr'
+            return get('/'.join((xfe_url, api, ip_address)),
+                       headers=_xfe_headers,
+                       auth=tuple(creds.split(':'))).json()  # <- 'Requests' Has a .json() method
+                                                    ^^^^^^^
+
+    ##### The following is an alternate implementation to Request's `resp.json`, and Unnecessary if `.json()` employed.
+    
+        def ip_record(ip_address, creds):
+            api = 'ipr'
+            resp = get('/'.join((xfe_url, api, ip_address)),
+                       headers=_xfe_headers,
+                       auth=tuple(creds.split(':')))
+            return loads(resp.content)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^ (resp.json() performs this natively!)                      
+
+Obtaining Authorized Access to the X-Force Exchange Commercial API
+------------------------------------------------------------------
+- [Free IBM User Registration (Obtain IBM Id)](https://www.ibm.com/account/reg/us-en/signup?formid=urx-30243)
+    
+How to generate and use X-Force Exchange API Keys:
+  - [X-Force Exchange - First Time Login and API-KEY Generattion](https://www.youtube.com/watch?v=3ZtYl4t5asc)
+    
+Free Trials and Paid Offerings to X-Force Exchange Commercial API    
+  - [X-Force Exchange Commercial API Offerings and Trials: X-Force Exchange Commercial API (Try/Buy)](https://www.ibm.com/products/ibm-xforce-exchange/editions)
+
 Terms and Conditions
---------------------
-    Your use of this file constitutes your agreement with the followings Terms and Condidtions.
-    Specifically, you agree that:
-    - This file is for educational purposes only. 
-    - You will use this file at your own risk.
-    - This file provides No Warranty, Expressed or Implied.
-    - You may copy, delete, modify, disseminate, and  include this file or any element of this file in any work product you desire.
-    - You agree to fully indemnify the Copyright holder from any claims, material or otherwise
-    with respect to the your use of this file and/or any of it's contents.
-    - YOur use of this file Does Not provide or constitute authorized entitlement to the X-Force Exchange API
-    - Entitlement to use X-Force Exchange API must be otained separately by the user.
+====================
 
-repo: https://github.com/beckerwilliams/xfe-users
+- This file is for educational purposes only. 
+- Use at your own risk, no warranty is expressed or implied.
+- The user of this file is solely responsible for obtaining IBM Authorized Entitlement to use the X-Force Exchange API. 
+- Use of this file DOES NOT constitute authorized access to the X-Force Exchange or it's services.
+- The user of this file will indemnify and save harmless the author of this file against any and all claims 
+  against the user that result from the user's' employment of this file, it's code elements, or other 
+  information contained herein.
+
 Copyright (c) 2020, Ron Williams. All Rights Reserved.
-
