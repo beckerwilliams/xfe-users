@@ -14,12 +14,12 @@ This Illustrates Access to XFE-API for 3 Methods
 from json import dumps
 from requests import get
 
-__version__ = '1.0.3'
-__date__ = '2020-04-19T17:20:48+0000'
+__version__ = '1.0.7'
+__date__ = '2020-04-19T17:34:53+0000'
 __author__ = 'Ron Williams, Chief Architect, IBM X-Force Exchange'
 __author_email__ = 'ron[.]williams@us[.]ibm[.]com'
 __copyright__ = '2020 (C) Ron Williams, IBM. No Warranty Expressed or Implied. Use is at your own risk.'
-__git_rev__ = '30c2db7e6253d510d09f4c152673b7c8e916a12c'
+__git_rev__ = '7a03240f36c9b21120df3a2f831fd184c1cb2f4c'
 
 # Recommended Default HTTP Header Variables (to be used with Requests.get()
 xfe_url = 'https://api.xforce.ibmcloud.com'
