@@ -1,0 +1,6 @@
+{
+  "cors_options": {
+    "methods": "GET,PUT,DELETE,POST,HEAD,OPTIONS",
+    "origin": "*"
+  }
+}
