@@ -1,0 +1,21 @@
+{
+  "name": "admin",
+  "version": "1.0.1",
+  "description": "administration prototype for application service",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo WRITE A PACKAGE TEST COMMAND"
+  },
+  "repository": {
+    "type": "git",
+    "url": "../.git"
+  },
+  "author": "ron williams, cto, infosec global",
+  "license": "MIT",
+  "devDependencies": {
+    "basic-auth": "^2.0.1",
+    "basic-auth-header": "^1.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
