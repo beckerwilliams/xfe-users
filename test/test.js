@@ -87,13 +87,12 @@ describe('OPTIONS scans', function () {
     });
 });
 
-describe('HEAD scans', function () {
-    it('supports HEAD /scans', function (done) {
+/// Admin Tests
+describe('Admin Endpoint', function () {
+    it('Exposes /admin', function (done) {
         request(app)
-            .head('/scans')
+            .get('/admin')
             .auth(userpw[0], userpw[1])
-            .expect("Access-Control-Allow-Origin", "*")
-            .expect("Content-Type", "text/html; charset=utf-8")
             .expect(200, done);
     });
 });
