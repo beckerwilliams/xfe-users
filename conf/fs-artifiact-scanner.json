@@ -1,4 +1,18 @@
 {
+  "servers": {
+    "app": {
+      "options": {
+        "host": "localhost",
+        "port": 3000
+      }
+    },
+  "admin": {
+      "options": {
+        "host": "localhost",
+        "port": 3737
+      }
+    }
+  },
   "cors_options": {
     "methods": "GET,PUT,DELETE,POST,HEAD,OPTIONS",
     "origin": "*"

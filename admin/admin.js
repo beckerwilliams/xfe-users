@@ -1,11 +1,13 @@
-// fs-artifact-scanner Administrative Interface, admin/app.js
+// fs-artifact-scanner Administrative Interface, admin/admin.js
 // author ron williams, cto, isg global
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
-let conf = require(path.join(__dirname, '../conf/fs-artifiact-scanner.json');
-console.log("Conf: " + conf);
 const path = require('path');
+// const console = require('console');
+
+let conf = require( '../conf/fs-artifiact-scanner.json');
+console.log("Conf: " + conf);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const createError = require('http-errors');
@@ -38,8 +40,6 @@ admin.use(express.static(path.join(__dirname, 'public')));
 // Main Application Supported Routes
 
 // Router Configuration
-
-admin.use('/', admin); // Root of the Admin Application
 
 // Admin Relative Root
 admin.use('/', function(req, res, next) {

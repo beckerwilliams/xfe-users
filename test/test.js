@@ -55,7 +55,7 @@ describe('GET scans', function () {
             .get('/scans')
             .auth(userpw[0], userpw[1])
             .expect(200)
-            .expect(/GET \/scans NOT IMPLEMENTED/, done);
+            .expect(/GET \/scans\/ NOT IMPLEMENTED/, done);
     });
 });
 describe('PUT scans', function () {
@@ -64,7 +64,7 @@ describe('PUT scans', function () {
             .put('/scans')
             .auth(userpw[0], userpw[1])
             .expect(200)
-            .expect(/PUT \/scans NOT IMPLEMENTED/, done);
+            .expect(/PUT \/scans\/ NOT IMPLEMENTED/, done);
     });
 });
 describe('POST scans', function () {
@@ -73,7 +73,7 @@ describe('POST scans', function () {
             .post('/scans')
             .auth(userpw[0], userpw[1])
             .expect(200)
-            .expect(/POST \/scans NOT IMPLEMENTED/, done);
+            .expect(/POST \/scans\/ NOT IMPLEMENTED/, done);
     });
 });
 
@@ -87,7 +87,7 @@ describe('OPTIONS scans', function () {
     });
 });
 
-/// Admin Tests
+/// Admin Endpoint Up (Write Separate Test file for Admin)
 describe('Admin Endpoint', function () {
     it('Exposes /admin', function (done) {
         request(app)

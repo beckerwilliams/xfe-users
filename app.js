@@ -19,7 +19,7 @@ const basicAuth = require('express-basic-auth');
 // Primary App Server
 const app = express();
 // Admin App Server
-const admin = express();
+const admin = require('./admin/admin');
 
 // Cross Site Origination Configuration
 const cors = require('cors');
@@ -47,15 +47,18 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const scansRouter = require('./routes/scans');
 
+// Mount Admin application on '/admin' path
 app.use('/admin', admin); // Admin Application
+
+// This Application's Resources
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/scans', scansRouter);
-
-// Admin Application Supported Routes
-admin.use('/', function(req, res, next) {
-    res.send(req.method + " " + req.baseUrl + req.url + ": NOT IMPLEMENTED");
-});
+//
+// // Admin Application Supported Routes
+// admin.use('/', function(req, res, next) {
+//     res.send(req.method + " " + req.baseUrl + req.url + ": NOT IMPLEMENTED");
+// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
