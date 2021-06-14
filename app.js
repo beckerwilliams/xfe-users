@@ -13,16 +13,17 @@ const basicAuth = require('express-basic-auth');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');/
+const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const scanRouter = require('./routes/scans');
+const scansRouter = require('./routes/scans');
 
 
 // Primary Application Server
 const app = express();
-// Cross Site Origination
+
+// Cross Site Origination Configuration
 const cors = require('cors');
 app.use(cors(conf.cors_options));
 
@@ -44,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Supported Routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/scans', scanRouter);
+app.use('/scans', scansRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
