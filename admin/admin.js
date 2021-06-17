@@ -6,7 +6,7 @@
 const path = require('path');
 // const console = require('console');
 
-let conf = require( '../conf/fs-artifiact-scanner.json');
+let conf = require( '../conf/fs-artifact-scanner.json');
 console.log("Conf: " + conf);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
