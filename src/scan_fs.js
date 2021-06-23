@@ -18,11 +18,23 @@
         120507
         0.074u 1.011s 0:01.07 100.9%	0+0k 0+0io 0pf+0w
  */
+/*
+    “The general pattern of a module is a function that defines private variables and functions;
+    creates privileged functions which, through closure, will have access to the private variables and functions;
+    and that returns the privileged functions or stores them in an accessible place.”
+
+Excerpt From: Douglas Crockford. “JavaScript: The Good Parts.” Apple Books.
+ */
 const fs = require('fs');
 const path = require("path");
 
-const err_msg = () => {
-    return msg || "Usage: ./dir_list.js <name of directory> to scan";
+const conf = require("../conf/fs-artifact-scanner.json").scan;
+
+const default_exclusion_list = ['.keepme', '.pyenv.d', 'node_modules', 'Library', '.deps', '.git', 'node', '.gitignore', 'tmp', 'work', 'working'];
+const default_select_ext = ['pem', 'der', 'cer', 'key', 'pub', 'png'];
+
+const err_msg = (msg) => {
+    return msg || "Usage: ./scan_fs.js <name of directory>";
 };
 
 const scan_fs = (directory, filter_lst, loptions) => {
@@ -31,23 +43,20 @@ const scan_fs = (directory, filter_lst, loptions) => {
     const options = loptions || default_options;
 
     fs.readdir(directory, options, (err, files) => {
-        const default_exclusion_list = ['.keepme', '.pyenv.d', 'node_modules', 'Library', '.deps', '.git', 'node', '.gitignore', 'tmp', 'work', 'working'].sort();
-        const exclusion_filter = (filename, excluded_names) => {
-            excluded_names = excluded_names || default_exclusion_list;
-            return excluded_names.includes(filename);
-        }
         if (!err) {
-            files.forEach((file) => {
-                if (file.name) {
-                    if (default_exclusion_list.includes(file.name)) {
-                    // if (exclusion_filter(file.name)) {
-                        console.log(`File Filtered: ${path.join(directory, file.name)}`);
-                    } else if (file.isFile())
-                        console.log(`${path.join(directory, file.name)} :f`);
-                    else if (file.isDirectory()) {
-                        console.log(`${path.join(directory, file.name)} :d`);
-                        scan_fs(path.join(directory, file.name));
-                    }
+            files.forEach((dirent) => {
+                if (dirent.name) {
+                    if (conf.default_file_exclusions.search(dirent.name) > -1) {
+                        // if (exclusion_filter(file.name)) {
+                        console.log(`File Filtered: ${path.join(directory, dirent.name)}`);
+                        // ignore entry
+                    } else if (dirent.isFile()) {
+                        if (conf.default_file_extensions_rgx.search(dirent.ext)) {
+                            console.log(`POLICY INCLUSION: ${dirent.name}: ${dirent.extname}`);
+                    } else if (dirent.isDirectory()) {
+                        // console.log(`${path.join(directory, file.name)}`);
+                        scan_fs(path.join(directory, dirent.name));
+                    } else console.log(`Unknown File Type ${file}`)
                 }
             });
         } else {
@@ -68,7 +77,7 @@ const scan_fs = (directory, filter_lst, loptions) => {
 module.export = scan_fs;
 
 // Dump Directories if Needed
-/* TEST */
+// /* TEST */
 if (process.argv.length <= 2) {
     console.log(err_msg());
     process.exit(-1);

@@ -6,7 +6,7 @@
         "port": 3000
       }
     },
-  "admin": {
+    "admin": {
       "options": {
         "host": "localhost",
         "port": 3737
@@ -16,5 +16,22 @@
   "cors_options": {
     "methods": "GET,PUT,DELETE,POST,HEAD,OPTIONS",
     "origin": "*"
+  },
+  "scan": {
+    "default_file_exclusions": [
+      ".keepme",
+      ".pyenv.d",
+      "node_modules",
+      "Library",
+      ".deps",
+      ".git",
+      "node",
+      ".gitignore",
+      "tmp",
+      "work",
+      "working"
+    ],
+    "default_file_extensions_rgx": "\\.pem$|\\.der$|\\.cer$|\\.key$|\\.pub$|\\.png$",
+    "default_file_excludes_rgx": "\\.deps$|\\.git$|\\.gitignore|\\.pyenv.d$|node_modules|Library|tmp|work|working"
   }
 }

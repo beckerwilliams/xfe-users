@@ -1,13 +1,13 @@
 const request = require('supertest');
-const app = require('../app');
+const app = require('./app');
 
 // Configuere Test Authentication
-let userpw = require('./test_pw.json').user
+let userpw = require('./test/test_pw.json').user
 console.log("\n*** Beginning Tests of Module \'" + app.name + ".js\' ***");
 
 // TEST Root
-describe('App', function () {
-    it('has the default page', function (done) {
+describe('App', () => {
+    it('has the default page', done => {
         request(app)
             .get('/')
             .auth(userpw[0], userpw[1])
@@ -17,8 +17,8 @@ describe('App', function () {
     });
 });
 
-describe('OPTIONS app', function () {
-    it('supports OPTIONS /', function (done) {
+describe('OPTIONS app', () => {
+    it('supports OPTIONS /', done => {
         request(app)
             .options('/')
             .auth(userpw[0], userpw[1])
@@ -28,8 +28,8 @@ describe('OPTIONS app', function () {
 });
 
 // TEST /users
-describe('GET users', function () {
-    it('Supports GET /users', function (done) {
+describe('GET users', () => {
+    it('Supports GET /users', done => {
         request(app)
             .get('/users')
             .auth(userpw[0], userpw[1])
@@ -38,8 +38,8 @@ describe('GET users', function () {
             .expect(/GET \/users NOT IMPLEMENTED/, done);
     });
 });
-describe('PUT users', function () {
-    it('Supports PUT /users', function (done) {
+describe('PUT users', () => {
+    it('Supports PUT /users', done => {
         request(app)
             .put('/users')
             .auth(userpw[0], userpw[1])
@@ -49,8 +49,8 @@ describe('PUT users', function () {
 });
 
 //TEST /scans
-describe('GET scans', function () {
-    it('supports GET /scans', function (done) {
+describe('GET scans', () => {
+    it('supports GET /scans', done => {
         request(app)
             .get('/scans')
             .auth(userpw[0], userpw[1])
@@ -58,8 +58,8 @@ describe('GET scans', function () {
             .expect(/GET \/scans\/ NOT IMPLEMENTED/, done);
     });
 });
-describe('PUT scans', function () {
-    it('supports PUT /scans', function (done) {
+describe('PUT scans', () => {
+    it('supports PUT /scans', done => {
         request(app)
             .put('/scans')
             .auth(userpw[0], userpw[1])
@@ -67,8 +67,8 @@ describe('PUT scans', function () {
             .expect(/PUT \/scans\/ NOT IMPLEMENTED/, done);
     });
 });
-describe('POST scans', function () {
-    it('supports POST /scans', function (done) {
+describe('POST scans', () => {
+    it('supports POST /scans', done => {
         request(app)
             .post('/scans')
             .auth(userpw[0], userpw[1])
@@ -77,8 +77,8 @@ describe('POST scans', function () {
     });
 });
 
-describe('OPTIONS scans', function () {
-    it('supports OPTIONS /scans', function (done) {
+describe('OPTIONS scans', () => {
+    it('supports OPTIONS /scans', done => {
         request(app)
             .options('/scans')
             .auth(userpw[0], userpw[1])
@@ -88,8 +88,8 @@ describe('OPTIONS scans', function () {
 });
 
 /// Admin Endpoint Up (Write Separate Test file for Admin)
-describe('Admin Endpoint', function () {
-    it('Exposes /admin', function (done) {
+describe('Admin Endpoint', () => {
+    it('Exposes /admin', done => {
         request(app)
             .get('/admin')
             .auth(userpw[0], userpw[1])
