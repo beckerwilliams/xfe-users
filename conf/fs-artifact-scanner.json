@@ -17,21 +17,17 @@
     "methods": "GET,PUT,DELETE,POST,HEAD,OPTIONS",
     "origin": "*"
   },
-  "scan": {
-    "default_file_exclusions": [
-      ".keepme",
-      ".pyenv.d",
-      "node_modules",
-      "Library",
-      ".deps",
-      ".git",
-      "node",
-      ".gitignore",
-      "tmp",
-      "work",
-      "working"
-    ],
-    "default_file_extensions_rgx": "\\.pem$|\\.der$|\\.cer$|\\.key$|\\.pub$|\\.png$",
-    "default_file_excludes_rgx": "\\.deps$|\\.git$|\\.gitignore|\\.pyenv.d$|node_modules|Library|tmp|work|working"
+  "ScanFs": {
+    "default_options": {
+      "withFileTypes": "true"
+    },
+    "filters": {
+      "default_accept_file_ext_rgx": "/|\\.pem$|\\.der$|\\.cer$|\\.key$|\\.pub$|\\.png$|\\.ssh$/",
+      "default_path_exclusions": "/|(\\.)*deps$|\\.DS_Store$|(\\.)*git$|(\\.)*gitignore$|\\.target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*npm$|node$|node_modules$|npm$System$|(\\.)*tmp$work$|working$|\\.pyenv.d$|}/",
+      "developer_notes": "The First Entry APPEARS to requires a '|' at the beginning of the entry, AFTER Regex START '/'. SEE REGEX DOCUMENTATION TO SEE WHY"
+    },
+    "cli_messages": {
+      "error": "Usage: ./scan_fs.js <name of directory>"
+    }
   }
 }
