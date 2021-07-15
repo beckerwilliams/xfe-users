@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive"
+    "test_data": "mocha --recursive"
   },
   "dependencies": {
     "basic-auth-header": "^1.0.1",

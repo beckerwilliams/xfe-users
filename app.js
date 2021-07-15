@@ -3,7 +3,7 @@
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
-let conf = require('./conf/fs-artifact-scanner.json');
+let conf = require('./conf/conf.js');
 console.log("Conf: " + conf);
 const path = require('path');
 const cookieParser = require('cookie-parser');

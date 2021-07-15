@@ -42,7 +42,7 @@
 // const fs = require('fs');
 // const path = require('path');
 // const escape_rgx_str = require('escape-string-regexp');
-// const conf = require("../conf/fs-artifact-scanner.json").Test_ScanFs;
+// const conf = require("../conf/conf").Test_ScanFs;
 //
 // // Test_ScanFs Object
 // const Test_ScanFs = {name: "Test_ScanFs"};

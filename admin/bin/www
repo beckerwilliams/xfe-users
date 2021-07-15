@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-const conf = require('../../conf/fs-artifact-scanner.json')
+const conf = require('../../conf/conf')
 const app = require('../admin');
 const debug = require('debug')('demo:server');
 const http = require('http');

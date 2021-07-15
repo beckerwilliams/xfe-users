@@ -4,7 +4,7 @@
   "description": "administration prototype for application service",
   "main": "bin/index.js",
   "scripts": {
-    "test": "echo WRITE A PACKAGE TEST COMMAND"
+    "test_data": "echo WRITE A PACKAGE TEST COMMAND"
   },
   "repository": {
     "type": "git",

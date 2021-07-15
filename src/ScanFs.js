@@ -47,7 +47,7 @@ const fs = require('fs');
 const path = require('path');
 const escape_rgx_str = require('escape-string-regexp');
 
-const conf = require("../conf/fs-artifact-scanner.json").ScanFs;
+const conf = require("../conf/conf").ScanFs;
 
 // ScanFs Object
 const ScanFs = {name: "ScanFs"};
