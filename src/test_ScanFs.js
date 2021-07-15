@@ -98,7 +98,7 @@
 // }
 // module.exports = Test_ScanFs;
 const fs = require('fs');
-const Test_ScanFs = require('./ScanFs.js');
+const Test_ScanFs = require('./ScanFs');
 // MAIN
 if (process.argv.length <= 2) {
     console.log(Test_ScanFs.err_msg());

@@ -3,7 +3,7 @@ const request = require('supertest');
 const server_opts = require('../conf/conf').servers;
 const app = require('../app');
 
-suite('ScanFs', done => {
+suite('ScanFs_API', done => {
     let userpw;
     suiteSetup(() => {
         userpw = server_opts.test_data.test_user;
