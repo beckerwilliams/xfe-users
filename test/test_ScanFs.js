@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 // <FILE>
 // author: ron williams
 // email: ron.williams@infosecglobal.com
@@ -98,13 +100,12 @@
 // }
 // module.exports = Test_ScanFs;
 const fs = require('fs');
-const Test_ScanFs = require('./ScanFs');
+const Test_ScanFs = require('../src/ScanFs.js');
 // MAIN
 if (process.argv.length <= 2) {
-    console.log(Test_ScanFs.err_msg());
+    console.log("Usage: ./test_ScanFs.js <Directory to Scan>");
     process.exit(-1);
 }
-
 
 let dir = process.argv[2];
 if (process.argv[2])
@@ -120,12 +121,11 @@ if (process.argv[2])
     } catch (err) {
         if (err) {
             if (err.code === "ENOENT") {
-                console.log(Test_ScanFs.err_msg())
+                console.log(`\tInvalid Scan Path, no such directory: ${dir}`)
                 console.error(`\tInvalid Scan Path, no such directory: ${dir}`);
             } else console.error(`\tInvalid Scan Path, error: ${err}`)
             return -1;
         }
     }
 Test_ScanFs.scan(dir);
-// Test_ScanFs.scan(fs.realpathSync(dir));
 

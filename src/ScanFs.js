@@ -1,3 +1,4 @@
+'use strict';
 // ScanFs.js
 //
 // author: ron williams
@@ -43,31 +44,23 @@
         2.30 real         0.17 user         2.14 sys
 
  */
+
 const fs = require('fs');
 const path = require('path');
-const escape_rgx_str = require('escape-string-regexp');
+const escape_string_regexp = require('escape-string-regexp');
+const conf = require('../conf/conf').ScanFs;
 
-const conf = require("../conf/conf").ScanFs;
-
-// ScanFs Object
-const ScanFs = {name: "ScanFs"};
-
-ScanFs.err_msg = (msg) => {
-    return msg || conf.cli_messages.error;
-};
-ScanFs.scan = (dir, opts) => {
-    // ScanFs opts defaults to
-    //
-    //  "default_options": {
-    //      "withFileTypes": "true"
-    //  }
-
-    fs.readdir(dir, opts || conf.default_options, (err, files) => {
-
+const ScanFs  = {};
+ScanFs.scan = (dir, filter) => {
+    if (!filter) {
+        filter = conf.filters.default_path_exclusions;
+    }
+    fs.readdir(dir, conf.default_options, (err, files) => {
         if (!err) { // We're good to evaluate
             files.forEach(dir_entry => {
                 let full_path = path.join(dir, dir_entry.name);
-                if (escape_rgx_str(dir_entry.name).search(conf.filters.default_path_exclusions) < 0) {
+                if (escape_string_regexp(dir_entry.name).search(filter) < 0) {
+                    // if (true) {
                     // We're here because the file found is NOT in the exclusion list
                     if (dir_entry.isFile()) {
                         console.log(full_path);
@@ -77,17 +70,20 @@ ScanFs.scan = (dir, opts) => {
                     }
                 }
             });
-        } else if (err.code === 'ENOENT') {
-            console.error(`Empty: ${fs.realpathSync(dir)}`);
-        } else if (err.code === 'EPERM') {
-            console.error(`No Permissions on Directory: ${fs.realpathSync(dir)}`);
-        } else if (err.code === 'EACCES') {
-            console.error(`Permission Denied: ${fs.realpathSync(dir)}`);
-        } else if (err.code === 'EBADF') {
-            console.error(`File Descriptor: ${fs.realpathSync(dir)}`);
-        } else if (err.code === 'ENOTDIR') {
-            console.error(`Not a directory" ${fs.realpathSync(dir)}`);
-        } else throw err;
+        } else {
+            throw `Directory Error: ${err}`;
+        }
+        // } else if (err.code === 'ENOENT') {
+        //     console.error(`Empty: ${dir}`);
+        // } else if (err.code === 'EPERM') {
+        //     console.error(`No Permissions on Directory: ${dir}`);
+        // } else if (err.code === 'EACCES') {
+        //     console.error(`Permission Denied: ${dir}`);
+        // } else if (err.code === 'EBADF') {
+        //     console.error(`File Descriptor: ${dir}`);
+        // } else if (err.code === 'ENOTDIR') {
+        //     console.error(`Not a directory: ${dir}`);
+        // } else throw `${dir}: ${err.code}`;
     });
 }
 module.exports = ScanFs;

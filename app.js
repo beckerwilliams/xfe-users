@@ -55,10 +55,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/scans', scansRouter);
 //
-// // Admin Application Supported Routes
-// admin.use('/', function(req, res, next) {
-//     res.send(req.method + " " + req.baseUrl + req.url + ": NOT IMPLEMENTED");
-// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

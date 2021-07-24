@@ -1,18 +1,28 @@
-// <FILE>
 // author: ron williams
-// email: ron.williams@infosecglobal.com
-// date: 
-const expect = require('chai').expect;
-
+// const ScanFs = require('../src/ScanFs/ScanFs');
+'use strict';
 const ScanFs = require('../src/ScanFs');
-const scanfs_opts = require('../conf/conf').ScanFs;
 
-suite('ScanFs', done => {
-
-    suite('scan tests', () => {
-        test('- bad directory', () => {expect(true === true);});
-        test(' - no entires', () => {});
-        test('- ~/WebStorm', () => {});
-        test('- FILE as Directory', () => {});
+suite('ScanFs', () => {
+    suite('scan tests', done => {
+        const expect = require('chai').expect;
+        test('.bad directory', async () => {
+            let dir = '/BadDirectory';
+            const cb = async direntry => {
+                console.log(`Call Back Identified: ${direntry.name}`);
+                expect(dir.name).equals(null);
+            };
+            expect(ScanFs.scan(dir, cb)).to.throw('ENOENT');
+            // expect(true);
+        });
+        test('.no entries', () => {
+            expect(true);
+        });
+        test('.~/WebStorm', () => {
+            expect(true);
+        });
+        test('.FILE as Directory', () => {
+            expect(true);
+        }, done);
     });
 });
