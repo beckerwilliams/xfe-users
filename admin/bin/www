@@ -3,8 +3,8 @@
 /**
  * Module dependencies.
  */
-const conf = require('../../conf/conf')
-const app = require('../admin');
+const conf = require('../../conf/conf.mjs')
+const app = require('../admin.mjs');
 const debug = require('debug')('demo:server');
 const http = require('http');
 

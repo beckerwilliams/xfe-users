@@ -1,5 +1,4 @@
-'use strict';
-module.exports = (() => {
+export default (() => {
     return {
         "servers": {
             "test_data": {
@@ -17,7 +16,7 @@ module.exports = (() => {
                 "options": {
                     "host": "localhost",
                     "port": 3000
-                },
+                }
             },
             "admin": {
                 "options": {
@@ -50,5 +49,5 @@ module.exports = (() => {
                 ]
             }
         }
-    }
+    };
 })();

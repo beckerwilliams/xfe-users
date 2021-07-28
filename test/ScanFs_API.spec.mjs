@@ -1,12 +1,14 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const server_opts = require('../conf/conf').servers;
-const app = require('../app');
+import conf from '../conf/conf.mjs';
 
+// const server_opts = require('../conf/conf.mjs').servers;
+import app from '../app.mjs';
+console.log(`app name ${app.name}`)
 suite('ScanFs_API', done => {
     let userpw;
     suiteSetup(() => {
-        userpw = server_opts.test_data.test_user;
+        userpw = conf.servers.test_data.test_user;
     });
     suite('ScanFS Authenticated API Tests', done => {
         test('Has Default Home Page', done => {

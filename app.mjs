@@ -1,33 +1,40 @@
 // fs-artifact-scanner
+// ./app.mjs
 // author ron williams, cto, isg global
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
-let conf = require('./conf/conf.js');
-console.log("Conf: " + conf);
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const createError = require('http-errors');
+import conf from './conf/conf.mjs';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import createError from 'http-errors';
 
 
 // Get Express Constructor
-const express = require('express');
+import express from 'express';
+
 // Enable Basic Authorization (basic-auth)
-const basicAuth = require('express-basic-auth');
+import basicAuth from 'express-basic-auth';
 
 // Primary App Server
 const app = express();
+
 // Admin App Server
-const admin = require('./admin/admin');
+import admin from './admin/admin.mjs';
 
 // Cross Site Origination Configuration
-const cors = require('cors');
+import cors from 'cors';
 app.use(cors(conf.cors_options));
 
 // Authentication Configurationm
-const ba_users = require('./auth/ba_users')  // This Loads the BA Dictionary for Direct Authentication
+import ba_users from './auth/ba_users.mjs';
 app.use(basicAuth(ba_users()));
+
+// Establish Local __dirname
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,9 +50,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Main Application Supported Routes
 
 // Router Configuration
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const scansRouter = require('./routes/scans');
+import indexRouter from './routes/index.mjs';
+import usersRouter from './routes/users.mjs';
+import scansRouter from './routes/scans.mjs';
 
 // Mount Admin application on '/admin' path
 app.use('/admin', admin); // Admin Application
@@ -72,5 +79,5 @@ app.use(function (err, req, res) { // no 'next' parameter
     res.status(err.status || 500);
     res.render('error');
 });
+export default app;
 
-module.exports = app;

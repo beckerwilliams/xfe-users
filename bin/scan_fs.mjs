@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// <FILE>
+// ../bin/src/scan_fs.mjs
+//
 // author: ron williams
 // email: ron.williams@infosecglobal.com
 // date:
@@ -20,7 +21,7 @@
     3.93 real         4.00 user         6.27 sys
 
     Test_ScanFs.js: With Internal Default File Exclusion Filter
-    [aragorn:~/development/fs-artifact-scanner] ron% /usr/bin/time csh -c "src/test_ScanFs.js ~/ -type f | wc -l"
+    [aragorn:~/development/fs-artifact-scanner] ron% /usr/bin/time csh -c "src/test_ScanFs.mjs ~/ -type f | wc -l"
     680574
     4.68 real         4.75 user         5.24 sys
 
@@ -28,29 +29,29 @@
 
 
     Testing for Exclusions
-    [aragorn:~/development/fs-artifact-scanner/src] ron% ./test_ScanFs.js ../.. | grep -E '(\.)*deps$|\.DS_Store$|(\.)*git$|(\.)*gitignore$|\.target$|(\.)*Trash$|(\.)*idea$|(\.)*npm$|node$|node_modules$|npm$System$|(\.)*tmp$work$|working$|\.pyenv.d$'
+    [aragorn:~/development/fs-artifact-scanner/src] ron% ./test_ScanFs.mjs ../.. | grep -E '(\.)*deps$|\.DS_Store$|(\.)*git$|(\.)*gitignore$|\.target$|(\.)*Trash$|(\.)*idea$|(\.)*npm$|node$|node_modules$|npm$System$|(\.)*tmp$work$|working$|\.pyenv.d$'
 
     [aragorn:~/development/fs-artifact-scanner/src] ron% find ../.. | grep -E '(\.)*deps$|\.DS_Store$|(\.)*git$|(\.)*gitignore$|\.target$|(\.)*Trash$|(\.)*idea$|(\.)*npm$|node$|node_modules$|npm$System$|(\.)*tmp$work$|working$|\.pyenv.d$'|wcl
     1410
 
-    [aragorn:~/development/fs-artifact-scanner/src] ron% ./test_ScanFs.js ../.. | grep -E '(\.)*deps$|\.DS_Store$|(\.)*git$|(\.)*gitignore$|\.target$|(\.)*Trash$|(\.)*idea$|(\.)*npm$|node$|node_modules$|npm$System$|(\.)*tmp$work$|working$|\.pyenv.d$'|wcl
+    [aragorn:~/development/fs-artifact-scanner/src] ron% ./test_ScanFs.mjs ../.. | grep -E '(\.)*deps$|\.DS_Store$|(\.)*git$|(\.)*gitignore$|\.target$|(\.)*Trash$|(\.)*idea$|(\.)*npm$|node$|node_modules$|npm$System$|(\.)*tmp$work$|working$|\.pyenv.d$'|wcl
     <NUTHIN>
 
  */
 'use strict';
 
-const fs = require('fs');
-const ScanFs = require('../src/ScanFs.js');
+import { realpathSync } from 'fs';
+import Collector from '../src/Collector.mjs';
 
 // MAIN
 if (process.argv.length <= 2) {
-    console.log("Usage: ./test_ScanFs.js <Directory to Scan>");
+    console.log("Usage: ./test_ScanFs.mjs <Directory to Scan>");
     process.exit(-1);
 }
 let dir = process.argv[2];
 if (process.argv[2]) {
     try {
-        fs.realpathSync(dir);
+        realpathSync(dir);
     } catch (err) {
         if (err.code === 'ENOENT') {
             console.error(`Empty: ${dir}`);
@@ -64,7 +65,6 @@ if (process.argv[2]) {
             console.error(`Not a directory: ${dir}`);
         } else
             console.error(`Invalid Scan Path, error: ${err}`);
-        return -1;
     }
 }
-ScanFs.scan(dir);
+Collector.fs_scan(dir);

@@ -21,5 +21,4 @@ router.all(relUrl, function(req, res, next) {
     // res.send(req.method + " /scans NOT IMPLEMENTED");
     sendNotImplemented(req, res, next);
 });
-
-module.exports = router;
+export default router;

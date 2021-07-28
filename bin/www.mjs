@@ -3,10 +3,11 @@
 /**
  * Module dependencies.
  */
-const conf = require('../conf/conf')
-const app = require('../app');
-const debug = require('debug')('demo:server');
-const http = require('http');
+import conf from '../conf/conf.mjs'
+import app from '../app.mjs';
+import dbg from 'debug';
+const debug = dbg('demo:server')
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
@@ -20,18 +21,9 @@ app.set('port', port);
  */
 
 let server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
 
 function normalizePort(val) {
   let port = parseInt(val, 10);
@@ -48,11 +40,6 @@ function normalizePort(val) {
 
   return false;
 }
-
-/**
- * Event listener for HTTP server "error" event.
- */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -76,11 +63,6 @@ function onError(error) {
       throw error;
   }
 }
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
 function onListening() {
   let addr = server.address();
   let bind = typeof addr === 'string'
