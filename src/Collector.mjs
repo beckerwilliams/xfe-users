@@ -18,39 +18,66 @@ import path from 'path';
 import escape_string_regexp from 'escape-string-regexp';
 
 // Internal Imports
-import conf from '../conf/conf.mjs';
-// const scan_fs_conf = conf.Collector.fs_scan.;
+import CONF from '../conf/conf.mjs';
+const FS_SCAN_OPTS = CONF.collector.fs_scan.default_options;
+// const FS_SCAN_BAD_DIRECTORY = CONF.collector.fs_scan.test["bad-directory"];
+// const FS_SCAN_EMPTY_DIRECTORY = CONF.collector.fs_scan.test["empty-directory"];
+// const FS_SCAN_FILE_AS_DIRECTORY = CONF.collector.fs_scan.test["file-as-directory"];
+const FS_SCAN_KNOWN_DIRECTORY = CONF.collector.fs_scan.test["known-directory"];
+const FS_SCAN_DEFAULT_PATH_EXCLUSIONS = CONF.collector.fs_scan.filters.default_path_inclusions;
 
-//// module ////
-const Collector = {};
-Collector.fs_scan = (dir, filter, cb) => {
-    filter = filter | conf.Collector.fs_scan.filters;
-    fs.readdir(dir, conf.Collector.fs_scan.default_options, (err, files) => {
-        if (!err) { // We're good to evaluate
-            files.forEach(dir_entry => {
-                let full_path = path.join(dir, dir_entry.name);
-                if (escape_string_regexp(dir_entry.name).search(filter) < 0) {
-                    if (dir_entry.isFile()) {
-                        Collector.fs_scan.processor(full_path);
-                    } else if (dir_entry.isDirectory()) {
-                        // Traverse to next Directory
-                        Collector.fs_scan(full_path, filter);
+import {__esModule} from "node-agent";
+
+class Collector {
+    /***
+     *
+     * @param dir
+     * @param filter
+     */
+
+    /***
+     *
+     * @param name
+     */
+    constructor(name) {
+        this.name = name | __esModule;
+        this.fs_scan_opts = FS_SCAN_OPTS;
+        this.known_dir = FS_SCAN_KNOWN_DIRECTORY;
+        this.filter = FS_SCAN_DEFAULT_PATH_EXCLUSIONS;
+    };
+    /***
+     *
+     * @param path
+     */
+    processor = path => {
+        console.log(`Processing ${path}`);
+        // YARA Rules
+        // LUA Rules
+    };
+    /***
+     *
+     * @param dir
+     * @param filter
+     */
+    fs_scan = (dir, filter) => {
+        this.filter = filter | this.filter;
+        fs.readdir(dir, this.fs_scan_opts, (err, files) => {
+            if (err) {
+                console.error(`fs.readdir.error: ${err}`);
+            } else {
+                files.forEach(dir_entry => {
+                    let full_path = path.join(dir, dir_entry.name);
+                    if (escape_string_regexp(dir_entry.name).search(this.filter) > -1) {
+                        if (dir_entry.isFile()) {
+                            this.processor(full_path);
+                        } else if (dir_entry.isDirectory()) {
+                            // Traverse to next Directory
+                            this.fs_scan(full_path, filter);
+                        }
                     }
-                }
-            });
-        } else {
-            console.error(`Directory Error: ${err}`);
-
-        }
-    });
-    return Collector.fs_scan;
+                });
+            }
+        });
+    };
 }
-
-//// Processing Functions ////
-Collector.fs_scan.processor = path => {
-    console.log(`Processing ${path}`);
-    // YARA Rules
-    // LUA Rules
-};
 export default Collector;
-

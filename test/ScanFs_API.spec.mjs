@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import conf from '../conf/conf.mjs';
 
-// const server_opts = require('../conf/conf.mjs').servers;
+// const server_opts = require('../CONF/CONF.mjs').servers;
 import app from '../app.mjs';
 console.log(`app name ${app.name}`)
 suite('ScanFs_API', done => {

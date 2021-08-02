@@ -1,33 +1,19 @@
 // author: ron williams
 // const Collector = require('../src/Collector/Collector');
 'use strict';
+
+// External Imports
 import chai from 'chai';
+const expect = chai.expect;
+import conf from '../conf/conf.mjs';
+import Collector from '../src/Collector.mjs'; // This is the instantiated object
 
-import Collector from '../src/Collector.mjs';
-const fs_scan = Collector.fs_scan;
+const BAD_DIRECTORY = conf.collector.fs_scan.test["bad-directory"];
 
-// const Collector = require('../src/Collector');
-
-suite('Collector', () => {
-    suite('scan tests', done => {
-        test('.bad directory', async () => {
-            let dir = '/BadDirectory';
-            const cb = async direntry => {
-                console.log(`Call Back Identified: ${direntry.name}`);
-                chai.expect(dir.name).equals(null);
-            };
-            // chai.expect(fs_scan(dir)).to.throw();
-            // chai.expect(fs_scan(dir, cb) === -1);
-            chai.expect(true);
-        });
-        test('.no entries', () => {
-            chai.expect(true);
-        });
-        test('.~/WebStorm', () => {
-            chai.expect(true);
-        });
-        test('.FILE as Directory', () => {
-            chai.expect(true);
-        }, done);
+// These Don't Work
+suite('Collector', done => {
+    let test_collector = new Collector();
+    test('Bad Directory Throws Error', () => {
+        expect(test_collector.fs_scan).to.throw(Error);
     });
-});
+})
