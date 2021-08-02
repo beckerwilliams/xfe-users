@@ -42,6 +42,7 @@
 
 import { realpathSync } from 'fs';
 import Collector from '../src/Collector.mjs';
+const test_collector = new Collector();
 
 // MAIN
 if (process.argv.length <= 2) {
@@ -67,4 +68,4 @@ if (process.argv[2]) {
             console.error(`Invalid Scan Path, error: ${err}`);
     }
 }
-Collector.fs_scan(dir);
+test_collector.scan_fs(dir);

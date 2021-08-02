@@ -37,8 +37,8 @@ export default (() => {
           "withFileTypes": "true"
         },
         "filters": {
-          "default_path_inclusions": "/|\\.pem$|\\.der$|\\.cer$|\\.key$|\\.pub$|\\.png$|\\.ssh$/",
-          "default_path_exclusions": "/|(\\.)*deps$|\\.DS_Store$|(\\.)*git$|(\\.)*gitignore$|\\.target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*npm$|node$|node_modules$|npm$|System$|(\\.)*tmp$|work$|working$|\\.pyenv.d$|}/",
+          "default_path_inclusions": "/|(\\.)*pem$|(\\.)*der$|(\\.)*cer$|(\\.)*key$|(\\.)*pub$|(\\.)*png$|(\\.)*ssh$/i",
+          "default_path_exclusions": "/|(\\.)*deps$|\\.DS_Store$|(\\.)*git$|(\\.)*gitignore$|\\.target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*npm$|node$|node_modules$|npm$|System$|(\\.)*tmp$|work$|working$|\\.pyenv.d$|}/i",
           "developer_notes": "The First Entry APPEARS to requires a '|' at the beginning of the entry, AFTER Regex START '/'. SEE REGEX DOCUMENTATION TO SEE WHY"
         },
         "cli_messages": {

@@ -17,34 +17,32 @@ import fs from 'fs';
 import path from 'path';
 import escape_string_regexp from 'escape-string-regexp';
 
-// Internal Imports
-import CONF from '../conf/conf.mjs';
-const FS_SCAN_OPTS = CONF.collector.fs_scan.default_options;
-// const FS_SCAN_BAD_DIRECTORY = CONF.collector.fs_scan.test["bad-directory"];
-// const FS_SCAN_EMPTY_DIRECTORY = CONF.collector.fs_scan.test["empty-directory"];
-// const FS_SCAN_FILE_AS_DIRECTORY = CONF.collector.fs_scan.test["file-as-directory"];
-const FS_SCAN_KNOWN_DIRECTORY = CONF.collector.fs_scan.test["known-directory"];
-const FS_SCAN_DEFAULT_PATH_EXCLUSIONS = CONF.collector.fs_scan.filters.default_path_inclusions;
+// Local Imports
+import fs_scan_default_directory_targets from "./scan_fs_default_directory_targets.mjs";
+import conf from '../conf/conf.mjs';
 
-import {__esModule} from "node-agent";
-
-class Collector {
-    /***
-     *
-     * @param dir
-     * @param filter
-     */
+//Constants
+const FS_SCAN_OPTS = conf.collector.fs_scan.default_options;
+const FS_SCAN_DEFAULT_PATH_EXCLUSIONS = conf.collector.fs_scan.filters.default_path_exclusions
+const FS_SCAN_DIRECTORIES_DEFAULT = fs_scan_default_directory_targets;
+/***
+ *
+ */
+export default class Collector {
 
     /***
      *
      * @param name
+     * @param fs_scan_opts
+     * @param scan_fs_directories
      */
-    constructor(name) {
-        this.name = name | __esModule;
-        this.fs_scan_opts = FS_SCAN_OPTS;
-        this.known_dir = FS_SCAN_KNOWN_DIRECTORY;
+    constructor(name, fs_scan_opts, scan_fs_directories) {
+        this.name = 'scan_fs_default_directory_targets';
+        this.fs_scan_opts = fs_scan_opts || FS_SCAN_OPTS;
         this.filter = FS_SCAN_DEFAULT_PATH_EXCLUSIONS;
+        this.scan_fs_dirs = scan_fs_directories || FS_SCAN_DIRECTORIES_DEFAULT;
     };
+
     /***
      *
      * @param path
@@ -59,25 +57,27 @@ class Collector {
      * @param dir
      * @param filter
      */
-    fs_scan = (dir, filter) => {
-        this.filter = filter | this.filter;
-        fs.readdir(dir, this.fs_scan_opts, (err, files) => {
-            if (err) {
-                console.error(`fs.readdir.error: ${err}`);
-            } else {
-                files.forEach(dir_entry => {
-                    let full_path = path.join(dir, dir_entry.name);
-                    if (escape_string_regexp(dir_entry.name).search(this.filter) > -1) {
-                        if (dir_entry.isFile()) {
-                            this.processor(full_path);
-                        } else if (dir_entry.isDirectory()) {
-                            // Traverse to next Directory
-                            this.fs_scan(full_path, filter);
+    scan_fs = (dirs, filter) => {
+        this.filter = filter || this.filter;
+        this.scan_fs_dirs.forEach(dir => {
+            fs.readdir(dir, this.fs_scan_opts, (err, files) => {
+                if (err) {
+                    console.error(`Invalid Directory Entry: ${err}`);
+                } else {
+                    files.forEach(dir_entry => {
+                        let full_path = path.join(dir, dir_entry.name);
+                        if (escape_string_regexp(dir_entry.name).search(this.filter) > -1) {
+                            if (dir_entry.isFile()) {
+                                this.processor(full_path);
+                            } else if (dir_entry.isDirectory()) {
+                                // Traverse to next Directory
+                                this.scan_fs(full_path, filter);
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         });
     };
 }
-export default Collector;
+

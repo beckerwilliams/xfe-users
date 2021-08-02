@@ -8,15 +8,11 @@
 // External Imports
 import chai from 'chai';
 import conf from '../conf/conf.mjs';
-
 const expect = chai.expect;
 
 
 // These Don't Work
 suite('Regexp Tests', () => {
-
-    let default_path_exclusions = conf.collector.fs_scan.filters.default_path_exclusions;
-    let default_path_inclusions = conf.collector.fs_scan.filters.default_path_inclusions;    // Test EACH REGEX for it's intended result
 
     // Setup Test Variables
     let test_path_exclusions = [
@@ -47,11 +43,16 @@ suite('Regexp Tests', () => {
         "test.pcks11"
     ];
 
+    // Subject Regex to Test
+    let default_path_exclusions = conf.collector.fs_scan.filters.default_path_exclusions;
+    let default_path_inclusions = conf.collector.fs_scan.filters.default_path_inclusions;
+
     // Run Tests
     test_path_exclusions.forEach((pathname) => {
         test(`In Exclusion List: ${pathname}`, () => {
             console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`);
             expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
+            // expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
         });
         test(`NOT In INCLUSION List: ${pathname}`, () => {
             console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
@@ -68,5 +69,4 @@ suite('Regexp Tests', () => {
             expect(pathname.search(test_path_inclusions)).below(0, "Inclusions Failed");
         });
     });
-
 });
