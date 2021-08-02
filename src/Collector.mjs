@@ -18,13 +18,13 @@ import path from 'path';
 import escape_string_regexp from 'escape-string-regexp';
 
 // Local Imports
-import default_target_directories from "./scan_fs_default_directory_targets.mjs";
+import default_target_directories from "./Collector_default_target_directories.mjs";
 import conf from '../conf/conf.mjs';
 
 //Constants
-const FS_SCAN_OPTS = conf.collector.fs_scan.default_options;
-const FS_SCAN_DEFAULT_PATH_EXCLUSIONS = conf.collector.fs_scan.filters.default_path_exclusions
-const FS_SCAN_DIRECTORIES_DEFAULT = default_target_directories;
+const SCAN_FS_OPTS = conf.collector.fs_scan.default_options;
+const SCAN_FS_DEFAULT_PATH_EXCLUSIONS = conf.collector.fs_scan.filters.default_path_exclusions
+const SCAN_FS_DIRECTORIES_DEFAULT = default_target_directories;
 /***
  *
  */
@@ -33,14 +33,14 @@ export default class Collector {
     /***
      *
      * @param name
-     * @param fs_scan_opts
+     * @param scan_fs_opts
      * @param scan_fs_directories
      */
-    constructor(name, fs_scan_opts, scan_fs_directories) {
-        this.name = 'scan_fs_default_directory_targets';
-        this.fs_scan_opts = fs_scan_opts || FS_SCAN_OPTS;
-        this.filter = FS_SCAN_DEFAULT_PATH_EXCLUSIONS;
-        this.scan_fs_dirs = scan_fs_directories || FS_SCAN_DIRECTORIES_DEFAULT;
+    constructor(name, scan_fs_opts, scan_fs_directories) {
+        this.name = 'Collector';
+        this.scan_fs_opts = scan_fs_opts || SCAN_FS_OPTS;
+        this.scan_fs_filter = SCAN_FS_DEFAULT_PATH_EXCLUSIONS;
+        this.scan_fs_dirs = scan_fs_directories || SCAN_FS_DIRECTORIES_DEFAULT;
     };
 
     /***
@@ -58,7 +58,7 @@ export default class Collector {
      * @param filter
      */
     scan_fs = (dirs, filter) => {
-        this.filter = filter || this.filter;
+        this.scan_fs_filter = filter || this.scan_fs_filter;
         this.scan_fs_dirs.forEach(dir => {
             fs.readdir(dir, this.fs_scan_opts, (err, files) => {
                 if (err) {
@@ -66,7 +66,7 @@ export default class Collector {
                 } else {
                     files.forEach(dir_entry => {
                         let full_path = path.join(dir, dir_entry.name);
-                        if (escape_string_regexp(dir_entry.name).search(this.filter) > -1) {
+                        if (escape_string_regexp(dir_entry.name).search(this.scan_fs_filter) > -1) {
                             if (dir_entry.isFile()) {
                                 this.processor(full_path);
                             } else if (dir_entry.isDirectory()) {

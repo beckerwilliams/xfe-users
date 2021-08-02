@@ -3,13 +3,13 @@
 // author: ron williams
 // email: ron.williams@infosecglobal.com
 // date: 02.08.2021
-import path from 'path/win32';
+import path from 'path/posix';
 
 /***
  *
  * @type {{win32: string[], freebsd: string[], darwin: string[]}}
  */
-const fs_scan_target_defaults = {
+const scan_fs_target_defaults = {
     "darwin":
         [
             "/System", "/Library", "/Applications",
@@ -38,26 +38,33 @@ const fs_scan_target_defaults = {
         "/usr/local/opt/bin", "/usr/local/opt/sbin", "/usr/local/opt/lib", "/usr/local/opt/etc"
     ]
 };
+
 const default_target_directories = (() => {
-    let targets = [];
-    // if (true) {
-    if (process.platform === 'win32') {
-        // Get windows Paths - Attach to %SYSTEMDRIVE%
-        fs_scan_target_defaults[process.platform].forEach((pathname, idx) => {
-            targets[idx] = path.join(process.env['SystemDrive'], pathname); // Add System Drive to Entries
+
+    let scan_fs_targets = [];
+
+    // Handle Files Provided by Windows ENVIRONMENT
+    const add_windows_default_entries = () => {
+        ["ProgramData", "Program Files", "Program Files (x86)", "windir"].forEach((win32_env_var, idx) => {
+            if (win32_env_var in process.env)
+                scan_fs_targets.push(path.win32.normalize(process.env[win32_env_var]));
         });
-        if ('ProgramData' in process.env)
-            targets.push(process.env['ProgramData']);
-        if ('Program Files' in process.env)
-            targets.push(process.env['Program Files']);
-        if ('Program Files (x86)' in process.env)
-            targets.push(process.env['Program Files (x86)']);
-        if ('windir' in process.env)
-            targets.push(process.env["windir"]);
-    } else {
-        targets = fs_scan_target_defaults[process.platform]
-    }
-    // Return Unique Values
-    return targets;
+    };
+
+    (new Set(scan_fs_target_defaults[process.platform])).forEach((pathname, idx) => {
+        // Load Target Array. For Windows. Add SystemDrive File PATH
+        if (process.platform === "win32")
+            scan_fs_targets[idx] = path.win32.join(process.env["SystemDrive"], pathname);
+        else  // For all others, normalize to POSIX Path ( import path/posix)
+            scan_fs_targets[idx] = path.normalize(pathname);
+    });
+
+    if (process.platform === "win32") add_windows_default_entries();
+
+    return scan_fs_targets;
+
 })();
+
 export default default_target_directories;
+
+// console.log(default_target_directories);
