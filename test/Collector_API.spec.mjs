@@ -1,10 +1,11 @@
+'use strict';
+// External Imports
 import request from 'supertest';
 
+// Local Imports
 import conf from '../conf/conf.mjs';
-
-// const server_opts = require('../conf/conf.mjs').servers;
 import app from '../app.mjs';
-console.log(`app name ${app.name}`)
+
 suite('ScanFs_API', done => {
     let userpw;
     suiteSetup(() => {

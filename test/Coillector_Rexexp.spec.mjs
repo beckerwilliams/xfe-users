@@ -50,22 +50,22 @@ suite('Regexp Tests', () => {
     // Run Tests
     test_path_exclusions.forEach((pathname) => {
         test(`In Exclusion List: ${pathname}`, () => {
-            console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`);
+            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`);
             expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
             // expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
         });
         test(`NOT In INCLUSION List: ${pathname}`, () => {
-            console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
+            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
             expect(pathname.search(default_path_inclusions)).below(0, "Inclusions Failed");
         });
     });
     test_path_inclusions.forEach((pathname) => {
         test(`Included in Inclusion List: ${pathname}`, () => {
-            console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`)
+            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`)
             expect(pathname.search(test_path_exclusions)).below(0, "Exclusions Failed");
         });
         test(`Excluded from INCLUSION LIST ${pathname}`, () => {
-            console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
+            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
             expect(pathname.search(test_path_inclusions)).below(0, "Inclusions Failed");
         });
     });

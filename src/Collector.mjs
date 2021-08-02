@@ -18,13 +18,13 @@ import path from 'path';
 import escape_string_regexp from 'escape-string-regexp';
 
 // Local Imports
-import fs_scan_default_directory_targets from "./scan_fs_default_directory_targets.mjs";
+import default_target_directories from "./scan_fs_default_directory_targets.mjs";
 import conf from '../conf/conf.mjs';
 
 //Constants
 const FS_SCAN_OPTS = conf.collector.fs_scan.default_options;
 const FS_SCAN_DEFAULT_PATH_EXCLUSIONS = conf.collector.fs_scan.filters.default_path_exclusions
-const FS_SCAN_DIRECTORIES_DEFAULT = fs_scan_default_directory_targets;
+const FS_SCAN_DIRECTORIES_DEFAULT = default_target_directories;
 /***
  *
  */

@@ -38,7 +38,7 @@ const fs_scan_target_defaults = {
         "/usr/local/opt/bin", "/usr/local/opt/sbin", "/usr/local/opt/lib", "/usr/local/opt/etc"
     ]
 };
-const fs_scan_default_directory_targets = (() => {
+const default_target_directories = (() => {
     let targets = [];
     // if (true) {
     if (process.platform === 'win32') {
@@ -60,4 +60,4 @@ const fs_scan_default_directory_targets = (() => {
     // Return Unique Values
     return targets;
 })();
-export default fs_scan_default_directory_targets;
+export default default_target_directories;
