@@ -4,6 +4,8 @@
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
+// noinspection DuplicatedCode
+
 import conf from './conf/conf.mjs';
 import path from 'path';
 import cookieParser from 'cookie-parser';

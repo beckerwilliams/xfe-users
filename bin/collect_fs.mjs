@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ../bin/src/scan_fs.mjs
+// ../bin/src/collect_fs.mjs
 //
 // author: ron williams
 // email: ron.williams@infosecglobal.com

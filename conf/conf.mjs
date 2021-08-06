@@ -56,7 +56,7 @@ export default (() => {
                     "known-directory": "/Users/ron/WebStorm"
                 },
                 "cli_messages": {
-                    "error": "Usage: ./scan_fs.mjs <name of directory>"
+                    "error": "Usage: ./collect_fs.mjs <name of directory>"
                 }
             },
             "net": {}

@@ -3,6 +3,8 @@
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
+// noinspection DuplicatedCode
+
 import path from 'path';
 
 //// Node & Node Module Imports
@@ -50,7 +52,7 @@ admin.use(express.static(path.join(__dirname, 'public')));
 // Router Configuration
 
 // Admin Relative Root
-admin.use('/', function(req, res, next) {
+admin.use('/', function(req, res) {
     res.send(req.method + " " + req.baseUrl + req.url + ": NOT IMPLEMENTED");
 });
 

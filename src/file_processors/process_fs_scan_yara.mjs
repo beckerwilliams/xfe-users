@@ -8,19 +8,19 @@ yara.initialize(function(error) {
     if (error) {
         console.error(error.message)
     } else {
-        var rule_string = [
+        const rule_string = [
             "rule is_good {",
             "	condition:",
             "		true",
             "}"
-        ].join("\n")
+        ].join("\n");
 
-        var rules = [
+        const rules = [
             {filename: "rules.yara"},
             {string: rule_string}
-        ]
+        ];
 
-        var scanner = yara.createScanner();
+        const scanner = yara.createScanner();
 
         scanner.configure({rules: rules}, function(error, warnings) {
             if (error) {
@@ -33,7 +33,7 @@ yara.initialize(function(error) {
                 if (warnings.length) {
                     console.error("Compile warnings: " + JSON.stringify(warnings));
                 } else {
-                    var req = {buffer: Buffer.from("content")}
+                    const req = {buffer: Buffer.from("content")};
 
                     scanner.scan(req, function(error, result) {
                         if (error) {
