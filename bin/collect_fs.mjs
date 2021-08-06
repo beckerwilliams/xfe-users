@@ -46,7 +46,7 @@ const test_collector = new Collector();
 
 // MAIN
 if (process.argv.length <= 2) {
-    console.log("Usage: ./test_ScanFs.mjs <!--suppress ALL --><Directory to Scan>");
+    console.log("Usage: ./test_ScanFs.mjs <Directory to Scan>");
     process.exit(-1);
 }
 let dir = process.argv[2];
