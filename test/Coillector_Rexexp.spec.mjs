@@ -10,7 +10,6 @@ import chai from 'chai';
 import conf from '../conf/conf.mjs';
 const expect = chai.expect;
 
-
 // These Don't Work
 suite('Regexp Tests', () => {
 
@@ -44,28 +43,23 @@ suite('Regexp Tests', () => {
     ];
 
     // Subject Regex to Test
-    let default_path_exclusions = conf.collector.fs_scan.filters.default_path_exclusions;
-    let default_path_inclusions = conf.collector.fs_scan.filters.default_path_inclusions;
+    let path_exclusions = conf.Collector.fs.filters.d_filters;
+    let path_inclusions = conf.Collector.fs.filters.d_paths;
 
     // Run Tests
     test_path_exclusions.forEach((pathname) => {
         test(`In Exclusion List: ${pathname}`, () => {
-            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`);
-            expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
-            // expect(pathname.search(default_path_exclusions)).above(-1, "Exclusions Failed");
+            expect(pathname.search(path_exclusions)).above(-1, "Exclusions Failed");
         });
         test(`NOT In INCLUSION List: ${pathname}`, () => {
-            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
-            expect(pathname.search(default_path_inclusions)).below(0, "Inclusions Failed");
+            expect(pathname.search(path_inclusions)).above( -1, "Inclusions Failed");
         });
     });
     test_path_inclusions.forEach((pathname) => {
         test(`Included in Inclusion List: ${pathname}`, () => {
-            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_exclusions)}`)
             expect(pathname.search(test_path_exclusions)).below(0, "Exclusions Failed");
         });
         test(`Excluded from INCLUSION LIST ${pathname}`, () => {
-            // console.log(`pathname: ${pathname} Search Value: ${pathname.search(default_path_inclusions)}`)
             expect(pathname.search(test_path_inclusions)).below(0, "Inclusions Failed");
         });
     });
