@@ -1,7 +1,9 @@
 'use strict';
 export default (() => {
-    let deny = /|(\\.)*deps$|\\.DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*node|(\\.)*node_modules|(\\.)*npm|(\\.)*tmp$|work$|working$|\\.pyenv.d$|}/i;
-    let permit = /|(\\.)*pem$|(\\.)*der$|(\\.)*cer$|(\\.)*crt|(\\.)*key$|(\\.)*pub$|(\\.)*png$|(\\.)*ssh$/i;
+    // let deny = /node_modules$/;
+    let deny = /(\\.)*deps$|(\\.)*DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*node_modules$|(\\.)*tmp$|(\\.)*work$|(\\.)*working$|(\\.)*pyenv\\.d$|}/i;
+    // let deny = /|(\\.)*deps$|(\\.)DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|(\\.)*node$|(\\.)*node_modules$|(\\.)*npm$|(\\.)*tmp$|work$|working$|\\.pyenv.d$|}/i;
+    let select = /(\\.)*pem$|(\\.)*der$|(\\.)*cer$|(\\.)*crt|(\\.)*key$|(\\.)*pub$|(\\.)*png$|(\\.)*ssh$/i;
 
     return {
         "servers": {
@@ -35,13 +37,12 @@ export default (() => {
             "origin": "*"
         },
         "Collector": {
+            "agent": {"options": {"keepAlive": "true", "keepAliveMsecs": 3000, "maxSockets": 1024}},
             "fs": {
-                "default_options": {
-                    "withFileTypes": "true"
-                },
+                "default_options": {"withFileTypes": "true"},
                 "filters": {
-                    "d_paths": permit,
-                    "d_filters": deny
+                    "selected_paths": select,
+                    "excluded_paths": deny
                 },
                 "default_discovery_paths": ["/System", "/Library", "/usr/local"],
                 "developer_notes": "The First Entry APPEARS to requires a '|' at the beginning of the entry, AFTER Regex START '/'. SEE REGEX DOCUMENTATION TO SEE WHY",
@@ -56,7 +57,7 @@ export default (() => {
                     "known-directory": "/Users/ron/WebStorm"
                 },
                 "cli_messages": {
-                    "error": "Usage: ./collect_fs.mjs <name of directory>"
+                    "error": "Usage: ./collect_fs.mjs discovery_path(s)"
                 }
             },
             "net": {}

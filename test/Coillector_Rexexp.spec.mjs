@@ -7,8 +7,12 @@
 
 // External Imports
 import chai from 'chai';
-import conf from '../conf/conf.mjs';
 const expect = chai.expect;
+import escape_rgx from 'escape-string-regexp';
+
+// Internal Imports
+import conf from '../conf/conf.mjs';
+
 
 // These Don't Work
 suite('Regexp Tests', () => {
@@ -22,10 +26,7 @@ suite('Regexp Tests', () => {
         "working",
         "work",
         "tmp",
-        "System",
-        "npm",
         "node_modules",
-        "node"
     ];
 
     let test_path_inclusions = [
@@ -43,24 +44,24 @@ suite('Regexp Tests', () => {
     ];
 
     // Subject Regex to Test
-    let path_exclusions = conf.Collector.fs.filters.d_filters;
-    let path_inclusions = conf.Collector.fs.filters.d_paths;
+    let path_exclusions = conf.Collector.fs.filters.excluded_paths;
+    let path_inclusions = conf.Collector.fs.filters.selected_paths;
 
     // Run Tests
-    test_path_exclusions.forEach((pathname) => {
+    test_path_exclusions.forEach(pathname => {
         test(`In Exclusion List: ${pathname}`, () => {
-            expect(pathname.search(path_exclusions)).above(-1, "Exclusions Failed");
+            expect(escape_rgx(pathname).search(path_exclusions)).above(-1, "Exclusions Failed");
         });
         test(`NOT In INCLUSION List: ${pathname}`, () => {
-            expect(pathname.search(path_inclusions)).above( -1, "Inclusions Failed");
+            expect(escape_rgx(pathname).search(path_inclusions)).eq(-1, "Inclusions Failed");
         });
     });
     test_path_inclusions.forEach((pathname) => {
         test(`Included in Inclusion List: ${pathname}`, () => {
-            expect(pathname.search(test_path_exclusions)).below(0, "Exclusions Failed");
+            expect(escape_rgx(pathname).search(test_path_exclusions)).below(0, "Exclusions Failed");
         });
         test(`Excluded from INCLUSION LIST ${pathname}`, () => {
-            expect(pathname.search(test_path_inclusions)).below(0, "Inclusions Failed");
+            expect(escape_rgx(pathname).search(test_path_inclusions)).below(0, "Inclusions Failed");
         });
     });
 });

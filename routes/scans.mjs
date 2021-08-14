@@ -1,18 +1,27 @@
 //
-const relUrl = "/";
-const NOT_IMPLEMENTED = 'NOT IMPLEMENTED'
+import {posix as path, win32} from 'path';
 import express from 'express';
-const router = express.Router()
-// const router = require('express').Router();
 
-function sendNotImplemented(req, res, next) {
-  console.log(req.method + " " + req.baseUrl + req.url + " " + NOT_IMPLEMENTED);
-  // res.send('GET /scans NOT IMPLEMENTED')
-  res.send(req.method + " "+ req.baseUrl + req.url + " " + NOT_IMPLEMENTED);
-}
+const router = express.Router();
 
-router.all(relUrl, function(req, res, next) {
-  // res.send(req.method + " /scans NOT IMPLEMENTED");
-  sendNotImplemented(req, res, next);
+
+// Internal Imports
+
+
+const NOT_IMPLEMENTED = "NOT IMPLEMENTED";
+
+const sendNotImplemented = (req, res, next) => {
+    console.log(req.method + " " + req.baseUrl + req.url + " " + NOT_IMPLEMENTED);
+    res.send(req.method + " " + req.baseUrl + req.url + " " + NOT_IMPLEMENTED);
+};
+
+router.all("/", sendNotImplemented);
+
+router.param('host', (req, res, next, host) => {
+    req.discover = host;
+});
+router.all('/host', (req, res, next) => {
+
 });
 export default router;
+

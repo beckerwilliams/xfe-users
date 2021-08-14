@@ -23,6 +23,7 @@ const admin = express();
 
 // Cross Site Origination Configuration
 import cors from 'cors';
+
 admin.use(cors(conf.cors_options));
 
 // Authentication Configurationm
@@ -32,8 +33,9 @@ admin.use(basicAuth(ba_users()));
 
 // This Code replaces non-ES Module __dirname
 // - Note: It must be loaded and run from the module in which directory id desired
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // view engine setup
@@ -52,7 +54,7 @@ admin.use(express.static(path.join(__dirname, 'public')));
 // Router Configuration
 
 // Admin Relative Root
-admin.use('/', function(req, res) {
+admin.use('/', function (req, res) {
     res.send(req.method + " " + req.baseUrl + req.url + ": NOT IMPLEMENTED");
 });
 

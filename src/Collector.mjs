@@ -13,6 +13,7 @@
 // External Imports
 import {readdir} from 'fs';
 import {join} from 'path';
+import escape_rgxp from 'escape-string-regexp';
 
 // Internal Imports
 import conf from '../conf/conf.mjs';
@@ -36,7 +37,7 @@ export default class Collector {
     constructor(discovery_paths, d_filters, cb_process) {
         // if (discovery_paths) assert.typeOf(discovery_paths, 'array');
         this.d_paths = discovery_paths || conf.Collector.fs.default_discovery_paths;
-        this.d_filters = d_filters || conf.Collector.fs.d_filters;
+        this.d_filters = d_filters || conf.Collector.fs.filters.excluded_paths;
         this.cb_process = cb_process || mock_process;
         this.fs_options = conf.Collector.fs.default_options;
     };
@@ -49,7 +50,6 @@ export default class Collector {
     collect_fs = (dir_targets, cb_process) => {
         this.d_paths = dir_targets || this.d_paths;
         this.cb_process = cb_process || this.cb_process;
-        // assert.typeOf(dir_targets, 'array', `Invalid dir_target'`);
         dir_targets.forEach(path => {
             readdir(path, this.fs_options, (err, files) => {
                 if (err) {
@@ -57,27 +57,22 @@ export default class Collector {
                 } else {
                     files.forEach(dirent => {
                         let full_path = join(path, dirent.name);
-                        console.log(full_path);  // DEBUG
-                        /***
-                         * We're at the individual file level
-                         * Evaluate 'dirent' here
-                         */
-                        /**
-                         * todo Filter Files from List, Here
-                         */
-                        if (dirent.name.search(this.d_filters) === -1) {
+                        // console.log(full_path);  // DEBUG
+                        // console.log(`dirent.name "${escape_rgxp(dirent.name)}" is ${(escape_rgxp(dirent.name).search(this.excluded_paths) > -1 ? "in list TRUE": "in list FALSE")}`);
+                        if (escape_rgxp(dirent.name).search(this.d_filters) === -1) {
                             if (dirent.isDirectory()) {
+                                // Descend into dirent
                                 this.collect_fs([full_path]);
                             } else if (dirent.isFile()) {
-                                /***
-                                 * todo File(s)
-                                 */
-                                console.log(`Processing File: ${dirent.name}`);
+                                // Process File
                                 if (this.cb_process) {
                                     this.cb_process(`TEST::File To Process: ${dirent.name}`);
                                 }
                             } else console.info(`File ${full_path} is neither a directory nor a file`);
                         }
+                        // } else {
+                        //     console.log(`EXCLUDED FILE Properly Caught: ${dirent.name}`);
+                        // }
                     });
                 }
             });

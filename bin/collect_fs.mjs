@@ -40,8 +40,9 @@
  */
 'use strict';
 
-import { realpathSync } from 'fs';
+import {realpathSync} from 'fs';
 import Collector from '../src/Collector.mjs';
+
 const test_collector = new Collector();
 
 // MAIN

@@ -40,7 +40,7 @@ export default (() => {
                 "developer_notes": "The First Entry APPEARS to requires a '|' at the beginning of the entry, AFTER Regex START '/'. SEE REGEX DOCUMENTATION TO SEE WHY"
             },
             "cli_messages": {
-                "error": "Usage: ./scan_fs.js <name of directory>"
+                "error": "Usage: ./discovery_fs.js <name of directory>"
             },
             "test": {
                 "user": [

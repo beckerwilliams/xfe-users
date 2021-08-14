@@ -4,9 +4,9 @@
 // date: 
 const yara = require('yara');
 
-yara.initialize(function(error) {
+yara.initialize(function (error) {
     if (error) {
-        console.error(error.message)
+        console.error(error.message);
     } else {
         const rule_string = [
             "rule is_good {",
@@ -22,7 +22,7 @@ yara.initialize(function(error) {
 
         const scanner = yara.createScanner();
 
-        scanner.configure({rules: rules}, function(error, warnings) {
+        scanner.configure({rules: rules}, function (error, warnings) {
             if (error) {
                 if (error instanceof yara.CompileRulesError) {
                     console.error(error.message + ": " + JSON.stringify(error.errors));
@@ -35,7 +35,7 @@ yara.initialize(function(error) {
                 } else {
                     const req = {buffer: Buffer.from("content")};
 
-                    scanner.scan(req, function(error, result) {
+                    scanner.scan(req, function (error, result) {
                         if (error) {
                             console.error(error.message);
                         } else {
