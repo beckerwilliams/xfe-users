@@ -22,4 +22,4 @@ Prototypical Basic-Auth authentication database
 
 ## Admin Server
 
-Is mounted on base server at '/admin'
+Mounted on base (app.js) server at '/admin'
