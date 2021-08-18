@@ -5,23 +5,12 @@
   ~rbw
  */
 //
-const NOT_IMPLEMENTED = 'NOT IMPLEMENTED';
+import express from 'express'
+let router = express.Router()
 
-let relUrl = "/";
-import express from 'express';
-let router = express.Router();
-
-const sendNotImplemented = (req, res) => {
-    res.send(req.method + " " + req.baseUrl + req.url + " " + NOT_IMPLEMENTED);
-};
-
-router.all(relUrl, function (req, res, next) {
-    sendNotImplemented(req, res, next);
-});
-
-router.param('host', (req, res, next, host) => {
-    req.addon = host;
-});
-
-// router.all(path(relUrl, discovery))
-export default router;
+router.all('/', function (req, res, next) {
+    res.set('content-type', 'application/json')
+    res.set('X-FAKE-HEADERS', 'XXXXXblahblahblahXXXXX')
+    res.send({title: 'Artifact Discovery Scan Page'})
+})
+export default router

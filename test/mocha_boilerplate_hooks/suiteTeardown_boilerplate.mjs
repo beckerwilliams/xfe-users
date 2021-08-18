@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 export const suiteTeardown_Hook = {
     suiteTeardown: [
         () => {
@@ -9,4 +9,4 @@ export const suiteTeardown_Hook = {
             // async or Promise-returning functions allowed
         }
     ]
-};
+}

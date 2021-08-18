@@ -1,9 +1,11 @@
-import express from 'express';
-
-const router = express.Router();
+import express from 'express'
+const router = express.Router()
+const NOT_IMPLEMENTED = "Not Implemented"
 
 router.all('/', function (req, res, next) {
-    res.send(req.method + " \/users NOT IMPLEMENTED");
-});
-export default router;
+    let method = req.method
+    res.header('content-type', 'application/json')
+    res.send({method: NOT_IMPLEMENTED})
+})
+export default router
 

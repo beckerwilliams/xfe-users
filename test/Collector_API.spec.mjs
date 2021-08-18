@@ -1,15 +1,16 @@
 'use strict';
 // External Imports
 import request from 'supertest';
+import app from '../app.mjs';
 
 // Local Imports
 import conf from '../conf/conf.mjs';
-import app from '../app.mjs';
+const NOT_IMPLEMENTED = {"method": "Not Implemented"}
 
 suite('ScanFs_API', () => {
     let user_pw;
-    suiteSetup(() => {
-        user_pw = conf.servers.test_data.test_user;
+    setup(() => {
+        user_pw = conf.collector.fs.test_data.user
     });
     suite('ScanFS Authenticated API Tests', () => {
         test('Has Default Home Page', done => {
@@ -17,7 +18,7 @@ suite('ScanFs_API', () => {
                 .get('/')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(/Welcome to Filesystem Artifact Scanner Home Page!/, done);
+                .expect(/Welcome to Filesystem Artifact Scanner Home Page/, done);
         });
         test('OPTIONS /', done => {
             request(app)
@@ -32,7 +33,7 @@ suite('ScanFs_API', () => {
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
                 .expect('Access-Control-Allow-Origin', '*')
-                .expect(/GET \/users NOT IMPLEMENTED/, done);
+                .expect(NOT_IMPLEMENTED, done);
             // });
         });
         test('PUT /users', done => {
@@ -40,7 +41,7 @@ suite('ScanFs_API', () => {
                 .put('/users')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(/PUT \/users NOT IMPLEMENTED/, done);
+                .expect(NOT_IMPLEMENTED, done);
         });
         //TEST /discovery
         test('GET /discovery', done => {
@@ -48,21 +49,21 @@ suite('ScanFs_API', () => {
                 .get('/discovery')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(/GET \/discovery\/ NOT IMPLEMENTED/, done);
+                .expect({"title": "Artifact Discovery Scan Page"}, done);
         });
         test('PUT /discovery', done => {
             request(app)
                 .put('/discovery')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(/PUT \/discovery\/ NOT IMPLEMENTED/, done);
+                .expect(/Artifact Discovery Scan Page/, done);
         });
         test('POST /discovery', done => {
             request(app)
                 .post('/discovery')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(/POST \/discovery\/ NOT IMPLEMENTED/, done);
+                .expect(/Artifact Discovery Scan Page/, done);
         });
         test('OPTIONS scans', done => {
             request(app)

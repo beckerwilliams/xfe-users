@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 export const suiteSetup_hooks = {
     suiteSetup: [
         (done) => {
@@ -9,4 +9,4 @@ export const suiteSetup_hooks = {
             // async or Promise-returning functions allowed
         }
     ]
-};
+}

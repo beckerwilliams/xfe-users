@@ -1,6 +1,6 @@
 /**
  * #ISG Inventory Collection Service
- * ##Collector describes artifact collection, whether from Network or File System Scans
+ * ##collector describes artifact collection, whether from Network or File System Scans
  * - Todo HOST Inventory Schema
  * - Todo NETWORK Inventory Schema
  * - Todo Use Cases (Data analysis)
@@ -9,73 +9,89 @@
  * email: ron.williams@infosecglobal.com
  */
 
-'use strict';
+'use strict'
+import escape_rgxp from 'escape-string-regexp'
 // External Imports
-import {readdir} from 'fs';
-import {join} from 'path';
-import escape_rgxp from 'escape-string-regexp';
+import {readdir} from 'fs'
+import path, {join} from 'path'
 
+// Environment Processing
+import env from '../.env.mjs'
 // Internal Imports
-import conf from '../conf/conf.mjs';
-// local functions
+import conf from '../conf/conf.mjs'
+// Default NODE_ENV is 'development'
+if (!env.NODE_ENV) env.NODE_ENV = 'development'
+
+// local constants
+const default_fext_selector = conf.collector.fs.filters.default_fext_selector
+const default_path_exclusions = conf.collector.fs.filters.default_path_exclusions
+const default_discovery_paths = conf.collector.fs.default_discovery_paths
+
+//// TEST
+if (env.NODE_ENV === 'development') console.log(process.env)
+
 /**
- * call back to process file identified by 'path'
- * @param path
+ *
+ * @param f_path
  */
-const mock_process = path => {
-    console.log(`cb_process: path: ${path}`);
-};
+const default_file_processor = f_path => {
+    //
+    // Filter by Selection Criteria
+    if (f_path.search(default_fext_selector) > -1) {  // Selection Criteria
+        // Process File Here
+        console.log(f_path)
+    }  // else console.error(`Excluded (dir): ${fpath}`)
+}
 
 export default class Collector {
-
-    /**
-     *
-     * @param discovery_paths
-     * @param d_filters
-     * @param cb_process
-     */
-    constructor(discovery_paths, d_filters, cb_process) {
-        // if (discovery_paths) assert.typeOf(discovery_paths, 'array');
-        this.d_paths = discovery_paths || conf.Collector.fs.default_discovery_paths;
-        this.d_filters = d_filters || conf.Collector.fs.filters.excluded_paths;
-        this.cb_process = cb_process || mock_process;
-        this.fs_options = conf.Collector.fs.default_options;
-    };
-
     /**
      *
      * @param dir_targets
-     * @param cb_process
+     * @param d_filters
+     * @param file_processor
      */
-    collect_fs = (dir_targets, cb_process) => {
-        this.d_paths = dir_targets || this.d_paths;
-        this.cb_process = cb_process || this.cb_process;
-        dir_targets.forEach(path => {
-            readdir(path, this.fs_options, (err, files) => {
+    constructor(dir_targets, d_filters, file_processor) {
+        // properties
+        this.d_paths = dir_targets || default_discovery_paths
+        this.d_filters = d_filters || default_path_exclusions
+
+        // required for file type discrimination in fs.readdir
+        this.fs_options = conf.collector.fs.default_options
+
+        // file processor - defaults to Included/Excluded report
+        this.file_processor = file_processor || default_file_processor
+    }
+
+    collect_fs = (directory_targets, cb_process) => {
+        // Update Instance Properties
+        this.d_paths = directory_targets || this.d_paths
+        this.file_processor = cb_process || this.file_processor
+
+        this.d_paths.forEach(d_path => {
+
+            readdir(d_path, this.fs_options, (err, files) => {
+
                 if (err) {
-                    console.info(`Invalid Directory Path: ${err.message}`);
-                } else {
+                    console.error(`Invalid Directory Name: ${err.message}`)
+                } else if (files) {
+
                     files.forEach(dirent => {
-                        let full_path = join(path, dirent.name);
-                        // console.log(full_path);  // DEBUG
-                        // console.log(`dirent.name "${escape_rgxp(dirent.name)}" is ${(escape_rgxp(dirent.name).search(this.excluded_paths) > -1 ? "in list TRUE": "in list FALSE")}`);
+                        let full_path = join(d_path, dirent.name)
                         if (escape_rgxp(dirent.name).search(this.d_filters) === -1) {
                             if (dirent.isDirectory()) {
                                 // Descend into dirent
-                                this.collect_fs([full_path]);
+                                this.collect_fs([full_path])
                             } else if (dirent.isFile()) {
                                 // Process File
-                                if (this.cb_process) {
-                                    this.cb_process(`TEST::File To Process: ${dirent.name}`);
+                                // default_file_processor(full_path)
+                                if (this.file_processor) {
+                                    this.file_processor(full_path)
                                 }
-                            } else console.info(`File ${full_path} is neither a directory nor a file`);
-                        }
-                        // } else {
-                        //     console.log(`EXCLUDED FILE Properly Caught: ${dirent.name}`);
-                        // }
-                    });
+                            } else if (process.env.NODE_ENV === 'dev') console.info(`File ${full_path} is neither a directory nor a file`)
+                        } else if (process.env.NODE_ENV === 'dev') console.log(`readdir excluded file: ${full_path}`)
+                    })
                 }
-            });
-        });
+            })
+        })
     }
 }
