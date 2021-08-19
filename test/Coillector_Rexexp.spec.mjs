@@ -39,8 +39,11 @@ suite('Regexp Tests', () => {
         "test.crt",
         "test.ca",
         "test.p12",
-        "test.pkcs12",
-        "test.pcks11"
+        "test.pfx",
+        "test.pkcs7",
+        "test.pkcs8",
+        "test.pkcs11",
+        "test.pcks12"
     ]
 
     // Subject Regex to Test

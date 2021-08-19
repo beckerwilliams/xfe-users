@@ -22,7 +22,7 @@ suite('ScanFs_API', () => {
         })
     })
     suite('FS Scans',  () => {
-        test('Has Default Scan', done => {
+        test('Has Default Discovery Page', done => {
             request(app)
                 .get('/discovery')
                 .auth(user_pw[0], user_pw[1])
