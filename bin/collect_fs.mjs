@@ -15,7 +15,8 @@ if (process.argv.length <= 2) {
     process.exit(-1)
 }
 // Process Command Line Args
-let dirs = Array()
+let scan_dirs = Array()
+let error_dirs = Array()
 process.argv.forEach((f_path, idx) => {
     /**
      * Capture Directory Paths from Argument String (process.argv[2 to (dirs.length - 1)]
@@ -24,24 +25,32 @@ process.argv.forEach((f_path, idx) => {
         console.log(`arg[${idx}]: ${f_path}`)
         try {
             realpathSync(f_path)
+            scan_dirs.push(f_path)
         } catch (err) {
-            if (err.code === 'ENOENT') {
-                console.error(`Empty: ${f_path}, err: ${err}`)
-            } else if (err.code === 'EPERM') {
-                console.error(`No Permissions on Directory: ${f_path}, err: ${err}`)
-            } else if (err.code === 'EACCES') {
-                console.error(`Permission Denied: ${f_path}, err: ${err}`)
-            } else if (err.code === 'EBADF') {
-                console.error(`File Descriptor: ${f_path}, err: ${err}`)
-            } else if (err.code === 'ENOTDIR') {
-                console.error(`Not a directory: ${f_path}, err: ${err}`)
-            } else
-                console.error(`Invalid Scan Path, err: ${err}`)
+            console.error(err)
+            error_dirs.push(f_path)
         }
-        dirs.push(f_path)
+        //     if (err.code === 'ENOENT') {
+        //         console.error(err)
+        //         // console.error(`Empty: ${f_path}, err: ${err}`)
+        //     } else if (err.code === 'EPERM') {
+        //         console.error(err)
+        //         // console.error(`No Permissions on Directory: ${f_path}, err: ${err}`)
+        //     } else if (err.code === 'EACCES') {
+        //         console.error(err)
+        //         // console.error(`Permission Denied: ${f_path}, err: ${err}`)
+        //     } else if (err.code === 'EBADF') {
+        //         console.error(err)
+        //         // console.error(`File Descriptor: ${f_path}, err: ${err}`)
+        //     } else if (err.code === 'ENOTDIR') {
+        //         console.error(err)
+        //         // console.error(`Not a directory: ${f_path}, err: ${err}`)
+        //     } else
+        //         console.error(err)
+        //         // console.error(`Invalid Scan Path, err: ${err}`)
+        // }
     }
 })
-// console.log(`dirs: ${dirs} is ${Array.isArray(dirs) ? 'an Array': 'NOT an Array'}`)
-// process.exit(0)
+console.log(error_dirs)
 const test_collector = new Collector()
-test_collector.collect_fs(dirs)
+test_collector.collect_fs(scan_dirs)

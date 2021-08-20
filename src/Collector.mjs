@@ -19,6 +19,7 @@ import path, {join} from 'path'
 import env from '../.env.mjs'
 // Internal Imports
 import conf from '../conf/conf.mjs'
+import default_file_processor from './file_processors/default_file_processor.mjs'
 // Default NODE_ENV is 'development'
 if (!env.NODE_ENV) env.NODE_ENV = 'development'
 
@@ -29,19 +30,6 @@ const default_discovery_paths = conf.collector.fs.default_discovery_paths
 
 //// TEST
 if (env.NODE_ENV === 'development') console.log(process.env)
-
-/**
- *
- * @param f_path
- */
-const default_file_processor = f_path => {
-    //
-    // Filter by Selection Criteria
-    if (f_path.search(default_fext_selector) > -1) {  // Selection Criteria
-        // Process File Here
-        console.log(f_path)
-    }  // else console.error(`Excluded (dir): ${fpath}`)
-}
 
 export default class Collector {
     /**
@@ -73,6 +61,7 @@ export default class Collector {
 
                 if (err) {
                     console.error(`Invalid Directory Name: ${err.message}`)
+
                 } else if (files) {
 
                     files.forEach(dirent => {

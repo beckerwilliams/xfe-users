@@ -65,6 +65,7 @@ console.log(x509.subject);
 
 import {readFileSync} from 'fs';
 // Local Constants
+
 // export const X509CertificateTypes = {
 //     X509_CERTIFICATE: "",
 //     X509_CERTIFICATE_AUTHORITY: "",
@@ -72,6 +73,9 @@ import {readFileSync} from 'fs';
 //     X509_CERTIFICATE_CLIENT: "",
 //     X509_CERTIFICATE_MIME: ""
 // };
+
+
+
 const PKIX_PEM_START_END_LABELS = {  // RFC 7468
     x509_certificate: {
         begin: "-----BEGIN CERTIFICATE-----",
@@ -133,11 +137,7 @@ class PKIX_PEM_Classifiers {
     //  * @param p_type
     //  * @returns {*}
     //  */
-    // getRgxClassifier = p_type => {
-    //     return new RegExp(
-    //         '^' + PKIX_PEM_START_END_LABELS[p_type].begin +
-    //         '$|' + PKIX_PEM_START_END_LABELS[p_type].end + '$', 'i')
-    // };
+    //
     /**
      * PEM Files may be bundles, Concatenated PEMS, Each Prefaced by '-----Begin' and appended with '-----End'
      *
