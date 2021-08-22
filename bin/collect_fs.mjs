@@ -7,7 +7,9 @@ import {realpathSync} from 'fs'
 // Internal Imports
 import Collector from '../src/Collector.mjs'
 import conf from '../conf/conf.mjs'
-const cli_err_msg = conf.collector.fs.cli_error_msg
+const cli_err_msg = conf.collector.fs.cli_messages.error
+
+
 
 // MAIN
 if (process.argv.length <= 2) {

@@ -1,13 +1,10 @@
-#!/user/bin/env node
-// <FILE>
-// author: ron williams
-// email: ron.williams@infosecglobal.com
-// date: 02.08.2021
+'use strict'
 import path from 'path/posix'
 
-/***
+
+/**
  *
- * @type {{win32: string[], freebsd: string[], darwin: string[]}}
+ * @type {{win32: string[], freebsd: string[], darwin: string[], linux: string[]}}
  */
 const scan_fs_target_defaults = {
     "darwin":
@@ -39,6 +36,10 @@ const scan_fs_target_defaults = {
     ]
 }
 
+/**
+ *
+ * @type {*[]}
+ */
 const default_target_directories = (() => {
 
     let scan_fs_targets = []
@@ -67,4 +68,3 @@ const default_target_directories = (() => {
 
 export default default_target_directories
 
-// console.log(default_target_directories)

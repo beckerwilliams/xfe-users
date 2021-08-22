@@ -58,8 +58,8 @@ export default (() => {
                     "known-directory": ["/Users/ron/WebStorm"],
                     "default-scan-directories": ["/Users/ron/WebStorm", "/usr/local"]
                 },
-                "cli_error_msg": {
-                    "error": "Usage: ./collect_fs.mjs discovery_dir1 [discovery_dir2 [...[discovery_dirN]]]"
+                "cli_messages": {
+                    "error": "Usage: ./collect_fs.mjs <dir1> [<dir2> [...[<dirN>]]]"
                 }
             },
             "net": {}
