@@ -74,7 +74,8 @@ class X509CertificateInfo {
         this.asn1Curve = cert.asn1Curve
         this.nistCurve = cert.nistCurve
 
-        // Methods and Method Enabled Properties
+        // Methods and Method Enabled Propertie
+
         this.properties = (() => {
             let bc = {}
             Object.getOwnPropertyNames(this).forEach((prop) => {
@@ -86,36 +87,35 @@ class X509CertificateInfo {
         this.equals = that => {
             if (arrayEqual(this.properties, that.properties)) {
                 // If we've the same properties, we may be the same
-                console.log('equals: Same Properities')
+                // console.log('equals: Same Properities')
                 for (let prop in this.properties) {
                     // todo SKIP PUBLIC KEY OBJECT Until decomposed here
                     if (prop === 'publicKey') continue
                     // Compare Array Properties
                     if (Array.isArray(this[prop])) {
                         if (!arrayEqual(this[prop].sort(), that[prop].sort())) {
-                            console.log('ARRAY UNEQUAL: ', this[prop].sort(), that[prop].sort())
+                            // console.log('ARRAY UNEQUAL: ', this[prop].sort(), that[prop].sort())
                             return false
                         }
                     } else if (this[prop] !== that[prop]) {
-                        console.log('NON ARRAY UNEQUAL: ', this[prop], that[prop])
+                        // console.log('NON ARRAY UNEQUAL: ', this[prop], that[prop])
                         return false
                     }
                 }
             } else {
-                console.log('equals: UNEQUAL Properties')
+                // console.log('equals: UNEQUAL Properties')
             }
             return true
         }
     }
 }
-
 export default X509CertificateInfo
-
-let t_cert = new X509CertificateInfo(readFileSync('/Users/ron/development/fs-artifact-scanner/data/exchange.xforce.ibmcloud.com-server-cert.der'))
-let t_cert2 = new X509CertificateInfo(readFileSync('/Users/ron/development/fs-artifact-scanner/data/exchange.xforce.ibmcloud.com-server-cert.der'))
-// expect(certificate).eq(certificate2)
-console.log('CERT1: properties: ', t_cert.properties)
-// console.log('Array Equal', arrayEqual(['d', 'c','b','a'].sort(), ['a','b','c','d'].sort()))
-// console.log('CERT2: properties: ', t_cert2.properties_arr())
-// console.log('Compare Cert1 & Cert2 EQUALITY', await t_cert.equals(t_cert2))
-console.log('CERT1 === CERT2', t_cert.equals(t_cert2))
+//
+// // Test Same Cert
+// let c_file = '/Users/ron/development/fs-artifact-scanner/test/example_certs/example.com-ca-cert.der'
+// let t_cert = new X509CertificateInfo(readFileSync(c_file))
+// let t_cert2 = new X509CertificateInfo(readFileSync(c_file))
+// // console.log('CERT1: properties: ', t_cert.properties)
+// console.log('CERT1 === CERT2', t_cert.equals(t_cert2))
+//
+//
