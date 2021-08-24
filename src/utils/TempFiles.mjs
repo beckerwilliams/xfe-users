@@ -4,7 +4,7 @@ import {mkdtempSync} from 'fs'
 import {tmpdir} from 'os'
 import path from 'path'
 
-class TempFiles {
+class MkTempFile {
     constructor() {
         try {
             this.t_dir = mkdtempSync(path.join(tmpdir(), 'isg_'))
@@ -16,5 +16,5 @@ class TempFiles {
         return path.join(this.t_dir, rand.push(randomUUID()))
     }
 }
-export default TempFiles
+export default MkTempFile
 

@@ -6,7 +6,7 @@ import path from 'path/posix'
  *
  * @type {{win32: string[], freebsd: string[], darwin: string[], linux: string[]}}
  */
-const scan_fs_target_defaults = {
+const os_dirs_default = {
     "darwin":
         [
             "/System", "/Library", "/Applications",
@@ -36,35 +36,27 @@ const scan_fs_target_defaults = {
     ]
 }
 
-/**
- *
- * @type {*[]}
- */
-const default_target_directories = (() => {
+const collection_dirs_default = (() => {
 
-    let scan_fs_targets = []
+    let collection_dirs = []
 
     // Handle Files Provided by Windows ENVIRONMENT
     const add_windows_default_entries = () => {
-        ["ProgramData", "Program Files", "Program Files (x86)", "windir"].forEach((win32_env_var, idx) => {
+        ["ProgramData", "Program Files", "Program Files (x86)", "windir"].forEach((win32_env_var) => {
             if (win32_env_var in process.env)
-                scan_fs_targets.push(path.win32.normalize(process.env[win32_env_var]))
+                collection_dirs.push(path.win32.normalize(process.env[win32_env_var]))
         })
     }
 
-    (new Set(scan_fs_target_defaults[process.platform])).forEach((pathname, idx) => {
+    (new Set(os_dirs_default[process.platform])).forEach((pathname, idx) => {
+
         // Load Target Array. For Windows. Add SystemDrive File PATH
         if (process.platform === "win32")
-            scan_fs_targets[idx] = path.win32.join(process.env["SystemDrive"], pathname)
+            collection_dirs[idx] = path.win32.join(process.env["SystemDrive"], pathname)
         else  // For all others, normalize to POSIX Path ( import path/posix)
-            scan_fs_targets[idx] = path.normalize(pathname)
+            collection_dirs[idx] = path.normalize(pathname)
     })
-
     if (process.platform === "win32") add_windows_default_entries()
-
-    return scan_fs_targets
-
+    return collection_dirs
 })()
-
-export default default_target_directories
-
+export default collection_dirs_default

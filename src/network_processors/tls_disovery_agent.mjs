@@ -5,16 +5,16 @@ import {readFileSync} from 'fs'
 import {connect, createSecureContext} from 'tls'
 
 // Local Imports
-import tls_ssl_ciphers from '../utils/local_open_ssl_ciphers.mjs'
+import all_cipher_suites from '../utils/get_openssl_supported_ciphersuites.mjs'
 import X509CertificateInfo from './X509CertificateInfo.mjs'
 import TLSSocketInfo from './TlsSocketInfo.mjs'
 
-// test
-const c_file = readFileSync('data')
+// // test
+// const c_file = readFileSync('../../data/exchange.xforce.ibmcloud.com-server-cert.der')
+//
+// // end test
 
-// end test
-
-process.exit()
+// process.exit()
 // RUN CONSTANTS - todo MOVE TO ARGS or CONFIG (Or Both!)
 const HOST = 'www.manulife.ca'
 const PORT = 443
@@ -22,7 +22,7 @@ const PORT = 443
 // Do Not Touch \/ \/ \/
 const tlsSecureContextOptions = {
     secureOptions: cc.SSL_OP_ALL | cc.ENGINE_METHOD_ALL | cc.SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION,
-    ciphers: tls_ssl_ciphers
+    ciphers: all_cipher_suites
 }
 
 const no_server_validation = (server, cert) => {
@@ -30,7 +30,7 @@ const no_server_validation = (server, cert) => {
     return true
 }
 
-tls_ssl_ciphers.forEach((cipher_suite) => {
+all_cipher_suites.forEach((cipher_suite) => {
     console.log(`\n\b***** test cipher_suite: ${cipher_suite} *****\n`)
     try {
         let tlsSecureContextOptions = {

@@ -9,19 +9,20 @@
  * email: ron.williams@infosecglobal.com
  */
 
-'use strict'
-import escape_rgxp from 'escape-string-regexp'
-// External Imports
-import {readdir} from 'fs'
-import path, {join} from 'path'
-
 // Environment Processing
 import env from '../.env.mjs'
+if (!env.NODE_ENV) env.NODE_ENV = 'development'
+
+
+// External Imports
+import {readdir} from 'fs'
+import  {join} from 'path'
+import escape_rgxp from 'escape-string-regexp'
+
+
 // Internal Imports
 import conf from '../conf/conf.mjs'
 import default_file_processor from './file_processors/default_file_processor.mjs'
-// Default NODE_ENV is 'development'
-if (!env.NODE_ENV) env.NODE_ENV = 'development'
 
 // local constants
 const default_fext_selector = conf.collector.fs.filters.default_fext_selector
