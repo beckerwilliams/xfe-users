@@ -6,11 +6,11 @@ import {CaEvent} from '../src/file_processors/resp/CaFileEvent.mjs'
 
 import conf from '../conf/conf.mjs'
 
-suite('CryptoAnaltyics Event Object', done => {
+suite('CryptoAnaltyics Event Object', () => {
     let default_path = "~/WebStorm"
     let implemented_properties = ['ts', 'url', 'type']
     let TestCaFileEvent = new CaFileEvent(default_path)
-    let ca_event = CaEvent
+    let ca_event = CaEvent  // todo include in TESTS
     test('new CaFileEvent', () => {
         expect(TestCaFileEvent).to.be.instanceOf(CaFileEvent)
     })

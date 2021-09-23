@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 import path from 'path'
-import conf from '../../conf/conf.mjs';
+import conf from '../../conf/conf.mjs'
 
-const default_fext_selector = conf.collector.fs.filters.default_fext_selector;
+const default_fext_selector = conf.collector.fs.filters.default_fext_selector
 
 const default_file_processor = f_path => {
         // Filter by Selection Criteria

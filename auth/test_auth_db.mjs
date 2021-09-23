@@ -1,10 +1,8 @@
 'use strict'
 export default (() => {
-    // let deny = /META-INF/i
+
     let deny = /META-INF|(\\.)*deps$|(\\.)*DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|^node_modules$|(\\.)*tmp$|(\\.)*work$|(\\.)*working$|(\\.)*pyenv\\.d$|(\\.)*test$/i
-    // let deny = /META-INF|(\\.)*deps$|(\\.)*DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|node_modules$|(\\.)*tmp$|(\\.)*work$|(\\.)*working$|(\\.)*pyenv\\.d$|(\\.)*test$}/i
     let select = /\\.cer$|\\.crt\\.der$|\\.pem$|\\.pkcs1[12]\\.pub$|\\.ssh$/i
-    // let select = /(\\.)*pem$|(\\.)*der$|(\\.)*cer$|(\\.)*crt|(\\.)*key$|(\\.)*pub$|(\\.)*png$|(\\.)*ssh$/i
 
     return {
         "discovery_api": {

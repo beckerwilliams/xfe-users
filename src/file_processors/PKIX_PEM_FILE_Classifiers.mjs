@@ -9,10 +9,7 @@
  *      1. Test For Certificate Type
  *         Start of Message Flag: -----BEGIN CERTIFICATE-----
  *         Endo of Message Flag : -----END CERTIFICATE-----
- */
-
-
-/**
+ *
  * Reference:   https://www.ssl.com/info/
  *              https://nodejs.org/dist/latest-v16.x/docs/api/crypto.html#crypto_class_x509certificate
  *
@@ -42,23 +39,28 @@
  *
  *
  */
+
+
+/**
+ *
+ * 1 Readfile
+ * 2 Testfile against regex, startswith, endswith - whatever's faster
+ * 3 todo - disposition file
+ */
+
 /**
  * PEM X.508 Classification Types
  *
  *
  *
  */
-
 import {readFileSync} from 'fs'
-// Local Constants
 
-// export const X509CertificateTypes = {
-//     X509_CERTIFICATE: "",
-//     X509_CERTIFICATE_AUTHORITY: "",
-//     X509_CERTIFICATE_SERVER: "",
-//     X509_CERTIFICATE_CLIENT: "",
-//     X509_CERTIFICATE_MIME: ""
-// }
+
+/**
+ * Start & End Tags For each of 8 PKIX Certificate Types
+ * @type {{pkcs7: {end: string, begin: string}, public_key: {end: string, begin: string}, pkcs8_private_key: {end: string, begin: string}, x509_certificate: {end: string, begin: string}, cms: {end: string, begin: string}, attribute_certificate: {end: string, begin: string}, x509_crl: {end: string, begin: string}, pkcs8_private_key_encrypted: {end: string, begin: string}}}
+ */
 const PKIX_PEM_START_END_LABELS = {  // RFC 7468
     x509_certificate: {
         begin: "-----BEGIN CERTIFICATE-----",
@@ -93,11 +95,11 @@ const PKIX_PEM_START_END_LABELS = {  // RFC 7468
         end: "-----END PUBLIC KEY-----"
     }
 }
-
-class PKIX_PEM_Classifiers extends Object {
+class PKIX_PEM_FILE_Classifiers extends Object {
 
     /**
-     *
+     * Create PKIX/PEM File Classifier
+     * @constructor
      */
     constructor() {
         super()
@@ -112,16 +114,14 @@ class PKIX_PEM_Classifiers extends Object {
                 begin_tag: PKIX_PEM_START_END_LABELS[p_type].begin,
                 end_tag: PKIX_PEM_START_END_LABELS[p_type].end
             }
-            // this[p_type] = new RegExp("^".join(PKIX_PEM_Encoding_StartEnd_Labels[p_type].begin, "|", PKIX_PEM_Encoding_StartEnd_Labels[p_type].end, "$"), "i")
             this.supported_types.push(p_type)  // These are the supported X
         }
     }
 
     /**
-     *
-     * @param f_path
-     * @param p_type
-     * @returns {PKIX_PEM_Classifiers}
+     * Get PKIX PEM File Format from Discovered File
+     * @param p_type - PKIX File Type
+     * @returns {PKIX_PEM_FILE_Classifiers}
      */
     p_type_accum = (f_path, p_type) => {
         let accum = {}
@@ -139,20 +139,7 @@ class PKIX_PEM_Classifiers extends Object {
     }
 }
 
-export default PKIX_PEM_Classifiers
-
 /**
- *
- * 1 Readfile
- * 2 Testfile against regex, startswith, endswith - whatever's faster
- * 3 todo - disposition file
+ * @exports
  */
-
-// TEST
-// console.time('pemtypes')
-// let cert_path = "/usr/local/etc/openssl@1.1/cert.pem"
-// let pem_classifier = new PKIX_PEM_Classifiers()
-// // console.log(pem_classifier.p_type_accum(cert_path))
-// let accum = pem_classifier.p_type_accum(cert_path, pem_classifier.classifiers.x509_certificate.name).accum
-// console.log('accumulator: ', accum)
-// console.timeEnd('pemtypes')
+export default PKIX_PEM_FILE_Classifiers

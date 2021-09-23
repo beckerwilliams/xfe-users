@@ -1,3 +1,4 @@
+// noinspection JSUnusedGlobalSymbols
 'use strict'
 import express from 'express'
 
@@ -11,7 +12,7 @@ const sendNotImplemented = (req, res) => {
 router.all("/", sendNotImplemented)
 
 router.param('host', (req, res, next, host) => {
-    req.discover = host;
+    req.discover = host
 })
 router.all('/host', (req, res, next) => {
 

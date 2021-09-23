@@ -9,28 +9,27 @@
  * email: ron.williams@infosecglobal.com
  */
 
+import escape_rgxp from 'escape-string-regexp'
+// External Imports
+import { readdir } from 'fs'
+import { join } from 'path'
 // Environment Processing
 import env from '../.env.mjs'
-if (!env.NODE_ENV) env.NODE_ENV = 'development'
-
-
-// External Imports
-import {readdir} from 'fs'
-import  {join} from 'path'
-import escape_rgxp from 'escape-string-regexp'
 
 
 // Internal Imports
 import conf from '../conf/conf.mjs'
 import default_file_processor from './file_processors/default_file_processor.mjs'
 
+if (!env.NODE_ENV) env.NODE_ENV = 'development'
+
+
 // local constants
-const default_fext_selector = conf.collector.fs.filters.default_fext_selector
 const default_path_exclusions = conf.collector.fs.filters.default_path_exclusions
 const default_discovery_paths = conf.collector.fs.default_discovery_paths
 
-//// TEST
-if (env.NODE_ENV === 'development') console.log(process.env)
+//// TE
+if (env.NODE_ENV === 'development') console.info(process.env["development"])
 
 export default class Collector {
     /**
@@ -50,7 +49,6 @@ export default class Collector {
         // file processor - defaults to Included/Excluded report
         this.file_processor = file_processor || default_file_processor
     }
-
     collect_fs = (directory_targets, cb_process) => {
         // Update Instance Properties
         this.d_paths = directory_targets || this.d_paths
@@ -77,11 +75,12 @@ export default class Collector {
                                 if (this.file_processor) {
                                     this.file_processor(full_path)
                                 }
-                            } else if (process.env.NODE_ENV === 'dev') console.info(`File ${full_path} is neither a directory nor a file`)
-                        } else if (process.env.NODE_ENV === 'dev') console.log(`readdir excluded file: ${full_path}`)
+                            } else if (process.env.NODE_ENV === 'dev') console.warn(`File ${full_path} is neither a directory nor a file`)
+                        } else if (process.env.NODE_ENV === 'dev') console.info(`readdir excluded file: ${full_path}`)
                     })
                 }
             })
+            return 0
         })
     }
 }

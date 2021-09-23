@@ -1,17 +1,18 @@
 // <FILE>
 // author: ron williams
 // email: ron.williams@infosecglobal.com
-// date: 
+// date:
 // author: ron williams
 'use strict'
 
 // External Imports
 import chai from 'chai'
-const expect = chai.expect
 import escape_rgx from 'escape-string-regexp'
 
 // Internal Imports
 import conf from '../conf/conf.mjs'
+
+const expect = chai.expect
 
 
 // These Don't Work
@@ -26,7 +27,7 @@ suite('Regexp Tests', () => {
         "working",
         "work",
         "tmp",
-        "node_modules",
+        "node_modules"
     ]
 
     let test_path_inclusions = [
@@ -43,7 +44,7 @@ suite('Regexp Tests', () => {
         "test.pkcs7",
         "test.pkcs8",
         "test.pkcs11",
-        "test.pcks12"
+        "test.pkcs12"
     ]
 
     // Subject Regex to Test
@@ -52,19 +53,20 @@ suite('Regexp Tests', () => {
 
     // Run Tests
     test_path_exclusions.forEach(pathname => {
-        test(`In Exclusion List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_exclusions)).above(-1, "Exclusions Failed")
+        test(`PATH NOT in Exclusion List: ${pathname}`, () => {
+            expect(escape_rgx(pathname).search(path_inclusions)).below(0, "NOT IN Inclusions Failed")
         })
-        test(`NOT In INCLUSION List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_inclusions)).eq(-1, "Inclusions Failed")
+        test(`IN PATH Exclusion List: ${pathname}`, () => {
+            expect(escape_rgx(pathname).search(path_exclusions)).above(-1, "IN Exclusions Failed")
         })
+
     })
     test_path_inclusions.forEach((pathname) => {
-        test(`Included in Inclusion List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(test_path_exclusions)).below(0, "Exclusions Failed")
+        test(`NOT In PATH Exclusion LIST ${pathname}`, () => {
+            expect(escape_rgx(pathname).search(path_exclusions)).below(0, `IN Exclusions Failed: ${pathname}`)
         })
-        test(`Excluded from INCLUSION LIST ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(test_path_inclusions)).below(0, "Inclusions Failed")
+        test(`IN PATH Inclusion List: ${pathname}`, () => {
+            expect(escape_rgx(pathname).search(path_inclusions)).above(-1, `IN Inclusion Failed: ${pathname}`)
         })
     })
 })

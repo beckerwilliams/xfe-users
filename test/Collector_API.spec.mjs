@@ -1,3 +1,5 @@
+// noinspection JSCheckFunctionSignatures
+
 'use strict';
 // External Imports
 import request from 'supertest';
@@ -7,7 +9,7 @@ import app from '../app.mjs';
 import conf from '../conf/conf.mjs';
 const NOT_IMPLEMENTED = {"method": "Not Implemented"}
 
-suite('ScanFs_API', () => {
+suite('Discovery_API', () => {
     let user_pw;
     setup(() => {
         user_pw = conf.collector.fs.test_data.user
@@ -41,7 +43,7 @@ suite('ScanFs_API', () => {
                 .put('/users')
                 .auth(user_pw[0], user_pw[1])
                 .expect(200)
-                .expect(NOT_IMPLEMENTED, done);
+                .expect(NOT_IMPLEMENTED, done)
         });
         //TEST /discovery
         test('GET /discovery', done => {

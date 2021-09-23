@@ -1,7 +1,13 @@
 'use strict'
-// Flattens nodejs X509Certificate object
-// todo write tests
+// noinspection JSUnusedGlobalSymbols
+/**
+ *
+ */
 export default class TlsSocketInfo {
+    /**
+     *
+     * @param tls_socket
+     */
     constructor(tls_socket) {
         this.address = tls_socket.address
         this.authorized = tls_socket.authorized
@@ -30,5 +36,3 @@ export default class TlsSocketInfo {
         this.ephemeralKeyInfoSize = _ephemeralKeyInfo.size
     }
 }
-
-// Test

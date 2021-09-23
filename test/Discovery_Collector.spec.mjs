@@ -6,7 +6,7 @@ import app from '../app.mjs'
 // Local Imports
 import conf from '../conf/conf.mjs'
 
-suite('ScanFs_API', () => {
+suite('Web Interface', () => {
     let user_pw
     suiteSetup(() => {
         user_pw = conf.discovery_api.test_data.test_user
@@ -24,7 +24,7 @@ suite('ScanFs_API', () => {
     suite('FS Scans',  () => {
         test('Has Default Discovery Page', done => {
             request(app)
-                .get('/discovery')
+                .get('/discovery/?dd=WebStorm,bin,development')
                 .auth(user_pw[0], user_pw[1])
                 .expect('content-type', /application\/json/)
                 .expect('content-length', '40')

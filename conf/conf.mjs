@@ -3,7 +3,7 @@ export default (() => {
 
     // Inclusion and Exclusion Selectors
     let default_path_exclusions = /META-INF|(\\.)*deps$|(\\.)*DS_Store$|(\\.)*git$|(\\.)*gitignore$|(\\.)*target$|(\\.)*Trash$|(\\.)*idea$|^node_modules$|(\\.)*tmp$|(\\.)*work$|(\\.)*working$|(\\.)*pyenv\\.d$|(\\.)*test$/i;
-    let default_fext_selector = /(\\.)+ca$|(\\.)*ca-bundle$|(\\.)*cer$|(\\.)*cert$|(\\.)*crt$|(\\.)+der$|(\\.)*key$|(\\.)*pem$|(\\.)*p12$|(\\.)*pfx$|(\\.)*pkcs([78]|1[12])$|(\\.)*pub$|(\\.)*ssh$/i;
+    let default_file_inclusions = /(\\.)*ca$|(\\.)*ca-bundle$|(\\.)*cer$|(\\.)*cert$|(\\.)*crt$|(\\.)*der$|(\\.)*key$|(\\.)*pem$|(\\.)*p12$|(\\.)*pfx$|(\\.)*pkcs(7|8|1[12])$|(\\.)*png$|(\\.)*pub$|(\\.)*ssh$/i;
     // let default_fext_selector = /(\\.)+ca$|(\\.)+ca-bundle$|(\\.)+cer$|(\\.)+cert$|(\\.)+crt$|(\\.)+der$|(\\.)+.key$|(\\.)+pem$|(\\.)+p12$|(\\.)+pfx$|(\\.)+pkcs([78]|1[12])$|(\\.)+pub$|(\\.)+ssh$/i;
     let home_dir = process.env['HOME']
 
@@ -43,7 +43,7 @@ export default (() => {
             "fs": {
                 "default_options": {"withFileTypes": "true"},
                 "filters": {
-                    "default_fext_selector": default_fext_selector,
+                    "default_fext_selector": default_file_inclusions,
                     "default_path_exclusions": default_path_exclusions
                 },
                 "default_discovery_paths": [home_dir],

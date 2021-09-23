@@ -2,13 +2,11 @@
 'use strict'
 
 // External Imports
-import {assert, expect} from 'chai'
+import { assert, expect } from 'chai'
 import conf from '../conf/conf.mjs'
 
 // Internal Imports
 import Collector from '../src/Collector.mjs'
-
-// todo: collect_fs, ...
 
 suite('Collector', () => {
     let scan_dirs
@@ -28,20 +26,21 @@ suite('Collector', () => {
     test('collector CONSTRUCTOR(dir_paths)', done => {
         expect(() => {
             new Collector(scan_dirs)
-        }, done()).to.not.throw(Error)
+        }).to.not.throw(Error)
+        done()
     })
-    test('new Collector(scan_dirs has required properties',  () => {
+    test('new Collector(scan_dirs has required properties', done => {
         collector = new Collector(scan_dirs)
         expect(collector).to.have.property('d_paths')
         expect(collector).to.have.property('d_filters')
         expect(collector).to.have.property('fs_options')
         expect(collector).to.have.property('file_processor')
+        done()
     })
     test('collect_fs(scandirs).', done => {
-        expect(() => collector.collect_fs(single_dir), 'ShowdNotThrowError', done()).to.not.throw(Error)
+        expect(
+            () => collector.collect_fs(single_dir).to.not.throw(Error)
+        )
+        done()
     })
-    // // test('collect_fs Default Directories', done => {
-    // //     console.log(`scan_dirs: count ${scan_dirs.length}: ${scan_dirs}`)
-    // //     expect(() => (new Collector()).collect_fs(scan_dirs), 'collector FS Should Not Throw Exception', done).to.not.throw(Error)
-    // // })
 })

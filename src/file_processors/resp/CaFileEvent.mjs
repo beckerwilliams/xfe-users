@@ -11,7 +11,7 @@ import {readFileSync} from 'fs'
         this.url = url || ""
         this.type = type || "" // Artifact Type
         if(dataRecord) {
-            this.data = readFileSync(path)
+            this.data = readFileSync(url)
         } else {
             this.data = null
         }
