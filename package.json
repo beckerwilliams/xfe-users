@@ -1,12 +1,14 @@
 {
   "name": "demo",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "private": true,
+  "mode": "module",
   "scripts": {
     "start": "node bin/www.mjs",
     "test_data": "mocha --recursive"
   },
   "dependencies": {
+    "babel": "^6.23.0",
     "basic-auth-header": "^1.0.1",
     "bower": "^1.8.12",
     "cookie-parser": "~1.4.3",
@@ -34,7 +36,7 @@
     "eslint-plugin-react": "^7.24.0",
     "mocha": "^9.0.1",
     "nyc": "^15.1.0",
-    "supertest": "^6.1.5",
+    "supertest": "^6.2.4",
     "typescript": "^4.3.2"
   }
 }

@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols
+
 'use strict'
 /**
  * PEM Processor
@@ -106,7 +108,6 @@ class PKIX_PEM_FILE_Classifiers extends Object {
         // Create Regex Classifiers for All Supported PKIX PEM Types
         this.supported_types = []
         this.classifiers = {}
-        this.accum = {}
         for (let p_type in PKIX_PEM_START_END_LABELS) {
             this.classifiers[p_type] = {
                 name: p_type,
@@ -117,10 +118,10 @@ class PKIX_PEM_FILE_Classifiers extends Object {
             this.supported_types.push(p_type)  // These are the supported X
         }
     }
-
     /**
-     * Get PKIX PEM File Format from Discovered File
-     * @param p_type - PKIX File Type
+     * #Get PKIX PEM File Format from Discovered File*
+     * @param f_path
+     * @param p_type
      * @returns {PKIX_PEM_FILE_Classifiers}
      */
     p_type_accum = (f_path, p_type) => {

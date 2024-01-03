@@ -1,3 +1,4 @@
+'use esversion:6'
 'use strict'
 export default (() => {
 

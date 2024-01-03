@@ -1,11 +1,16 @@
 // fs-artifact-scanner
 // ./app.mjs
-// author ron williams, cto, isg global
+// author ron williams, General Partner, Becker Williams Trading General Partnership
 // 2021.06.13
 // Have an Authenticated (Basic Authentication), CORS Controlled Web Server
 //
 // noinspection JSCheckFunctionSignatures
 
+/**
+ * #FS Artifact Scanner
+ * @module ./app
+ * @see module:express, module:helmet, module:express-basic-auth, module:cors, module:cookie, module:express-session, module:session-file-store, module:morgan, module:http-errors
+ */
 import conf from './conf/conf.mjs'
 import path from 'path'
 import cookieParser from 'cookie-parser'
@@ -20,6 +25,7 @@ import basicAuth from 'express-basic-auth'
 
 // Primary App Server
 const app = express()
+
 // Admin App Server - Mounted on /admin
 import admin from './admin/admin.mjs'
 
@@ -31,7 +37,7 @@ app.use(helmet())
 import cors from 'cors'
 app.use(cors(conf.discovery_api.cors_options))
 
-// Authentication
+// Authentication  (Local / In-app User DB)
 import ba_users from './auth/ba_users.mjs'
 app.use(basicAuth(ba_users()))
 
@@ -47,13 +53,14 @@ app.use(basicAuth(ba_users()))
 // import cookie from 'cookie'
 
 
-// Establish Local __dirname
+// Establish Local __dirname NOTE: Must be run IN FILE where dirname desired.
+// Note: This technique DOES NOT WORK if imported from a directory DIFFERENT from this File.
 import {dirname} from 'path'
 import {fileURLToPath} from 'url'
-const __dirname = dirname(fileURLToPath(import.meta.url))
+const local_dirname = dirname(fileURLToPath(import.meta.url))
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(local_dirname, 'views'))
 app.set('view engine', 'pug')
 
 // Main Server / Logging and Data Handling
@@ -61,7 +68,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(local_dirname, 'public')))
 
 /** Main Application Supported Routes */
 // Mount Admin application on '/admin' path

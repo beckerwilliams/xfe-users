@@ -1,15 +1,19 @@
-FROM node:8.11-alpine
+FROM node:latest
 
-WORKDIR /usr/src/app
+WORKDIR /ar
+
+WORKDIR app
 
 ARG NODE_ENV
+
 ENV NODE_ENV $NODE_ENV
 
-COPY package*.json /usr/src/app/
-RUN npm install
+COPY admin auth conf routes views app.mjs package*.json README.md $WORKDIR/
 
-COPY . /usr/src/app
+RUN ls $WORKDIR
 
-ENV PORT 5000
+ENV PORT 3000
+
 EXPOSE $PORT
+
 CMD [ "npm", "start" ]

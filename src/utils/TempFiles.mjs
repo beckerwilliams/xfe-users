@@ -16,5 +16,4 @@ class MkTempFile {
         return path.join(this.t_dir, rand.push(randomUUID()))
     }
 }
-export default MkTempFile
 

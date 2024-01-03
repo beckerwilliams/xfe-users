@@ -1,13 +1,11 @@
 'use strict'
 // System Imports
 import {constants as cc} from 'crypto'
-import {readFileSync} from 'fs'
 import {connect, createSecureContext} from 'tls'
 
 // Local Imports
 import all_cipher_suites from '../utils/get_openssl_supported_ciphersuites.mjs'
 import X509CertificateInfo from './X509CertificateInfo.mjs'
-import TLSSocketInfo from './TlsSocketInfo.mjs'
 
 // // test
 // const c_file = readFileSync('../../data/exchange.xforce.ibmcloud.com-server-cert.der')

@@ -39,9 +39,8 @@ const PKIX_PEM_START_END_LABELS = {  // RFC 7468
  * @param p_type
  * @returns {RegExp}
  */
-const getRgxClassifier = p_type => {
+export const getRgxClassifier = p_type => {
     return new RegExp(
         '^' + PKIX_PEM_START_END_LABELS[p_type].begin +
         '$|' + PKIX_PEM_START_END_LABELS[p_type].end + '$', 'i');
 }
-export default getRgxClassifier

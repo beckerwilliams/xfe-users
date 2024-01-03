@@ -1,4 +1,5 @@
 // author: ron williams
+'esversion: 6'
 'use strict'
 
 // External Imports
@@ -18,7 +19,7 @@ suite('Collector', () => {
         collector = new Collector()
     })
     test('scan_dirs is Array', () => {
-        assert.instanceOf(scan_dirs, Array, 'collector.scan_dirs Is Not An Array')
+        assert.instanceOf(scan_dirs, Array, `scan_dirs is Array: ${scan_dirs}: FAIL`)
     })
     test('collector is Collector', () => {
         assert.instanceOf(collector, Collector, 'New collector is NOT a collector')
@@ -38,6 +39,7 @@ suite('Collector', () => {
         done()
     })
     test('collect_fs(scandirs).', done => {
+        // noinspection JSVoidFunctionReturnValueUsed
         expect(
             () => collector.collect_fs(single_dir).to.not.throw(Error)
         )

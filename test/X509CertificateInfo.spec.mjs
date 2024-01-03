@@ -6,7 +6,7 @@ import {expect} from 'chai'
 /**
  * GOALS:
  *   1. Decompose Fields of X509 Certificate
- *   2. Consume PEM or DER Certificate Formates
+ *   2. Consume PEM or DER Certificate Format
  *   3. Demonstrate Equality Despite Source Data Format
  */
 suite('X509CertificateInfo.mjs', () => {

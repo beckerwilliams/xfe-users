@@ -36,7 +36,7 @@ const os_dirs_default = {
     ]
 }
 
-const collection_dirs_default = (() => {
+export const collection_dirs_default = (() => {
 
     let collection_dirs = []
 
@@ -59,4 +59,3 @@ const collection_dirs_default = (() => {
     if (process.platform === "win32") add_windows_default_entries()
     return collection_dirs
 })()
-export default collection_dirs_default

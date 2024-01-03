@@ -6,7 +6,7 @@
  * - Todo Use Cases (Data analysis)
  *
  * Author: Ron Williams, CTO, INFOSEC GLOBAL Inc.
- * email: ron.williams@infosecglobal.com
+ * author-email: ron.williams@infosecglobal.com
  */
 
 import escape_rgxp from 'escape-string-regexp'

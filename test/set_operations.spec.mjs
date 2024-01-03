@@ -1,11 +1,11 @@
 'use strict'
 /**
- * Tests
- *      - isSuperset
- *      - union
- *      - intersection
- *      - symmetricDifference
- *      - difference
+ * #  Set Operations SPEC
+ *   - isSuperset
+ *   - union
+ *   - intersection
+ *   - symmetricDifference
+ *   - difference
  */
 import {expect} from 'chai'
 import {isSuperset, union, intersection, symmetricDifference, difference} from '../src/utils/set_operations.mjs'

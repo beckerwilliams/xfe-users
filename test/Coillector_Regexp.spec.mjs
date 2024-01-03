@@ -1,21 +1,12 @@
-// <FILE>
-// author: ron williams
-// email: ron.williams@infosecglobal.com
-// date:
-// author: ron williams
 'use strict'
 
 // External Imports
-import chai from 'chai'
+import { expect } from 'chai'
 import escape_rgx from 'escape-string-regexp'
 
 // Internal Imports
 import conf from '../conf/conf.mjs'
 
-const expect = chai.expect
-
-
-// These Don't Work
 suite('Regexp Tests', () => {
 
     // Setup Test Variables
@@ -29,7 +20,6 @@ suite('Regexp Tests', () => {
         "tmp",
         "node_modules"
     ]
-
     let test_path_inclusions = [
         "test.pem",
         "test.der",
@@ -52,21 +42,24 @@ suite('Regexp Tests', () => {
     let path_inclusions = conf.collector.fs.filters.default_fext_selector
 
     // Run Tests
-    test_path_exclusions.forEach(pathname => {
-        test(`PATH NOT in Exclusion List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_inclusions)).below(0, "NOT IN Inclusions Failed")
+    suite('Test EXCLUDED File Paths', () => {
+        test_path_exclusions.forEach(pathname => {
+            test(`EXCLUDED PATH NOT in Inclusion List: ${pathname}`, () => {
+                expect(escape_rgx(pathname).search(path_inclusions)).below(0, `FAIL: ${pathname}`)
+            })
+            test(`EXCLUDED IN PATH Exclusion List: ${pathname}`, () => {
+                expect(escape_rgx(pathname).search(path_exclusions)).above(-1, `EFAIL: ${pathname}`)
+            })
         })
-        test(`IN PATH Exclusion List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_exclusions)).above(-1, "IN Exclusions Failed")
-        })
-
     })
-    test_path_inclusions.forEach((pathname) => {
-        test(`NOT In PATH Exclusion LIST ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_exclusions)).below(0, `IN Exclusions Failed: ${pathname}`)
-        })
-        test(`IN PATH Inclusion List: ${pathname}`, () => {
-            expect(escape_rgx(pathname).search(path_inclusions)).above(-1, `IN Inclusion Failed: ${pathname}`)
+    suite('Test INCLUDED File Paths', () => {
+        test_path_inclusions.forEach((pathname) => {
+            test(`INCLUDED PATH NOT Exclusion LIST ${pathname}`, () => {
+                expect(escape_rgx(pathname).search(path_exclusions)).below(0, `FAIL ${pathname}`)
+            })
+            test(`INCLUDED PATH IN Inclusion List: ${pathname}`, () => {
+                expect(escape_rgx(pathname).search(path_inclusions)).above(-1, `FAIL : ${pathname}`)
+            })
         })
     })
 })

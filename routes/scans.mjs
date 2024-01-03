@@ -18,4 +18,4 @@ router.all('/host', (req, res, next) => {
 
 })
 export default router
-
+// todo IN PROGRESS
